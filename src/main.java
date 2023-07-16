@@ -9,295 +9,280 @@ public class main {
     public static void main (String[] args) throws Exception{
         FileInputStream fileInputStream = new FileInputStream("C:\\Users\\zhuko\\IdeaProjects\\projekt\\biblioteczka.bin");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        Biblioteczka biblioteczka = (Biblioteczka) objectInputStream.readObject();
+        Library library = (Library) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
 
-        int il=15;
+        int countOfBooks=15;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Mała biblioteczka Aleny Zhukouskiej ))");
-        boolean running = true;
-        List<Kupic> do_kupienia = new ArrayList<>();
+        System.out.println("Your library");
+        boolean go = true;
+        List<Kupic> toBuy = new ArrayList<>();
 
-        while(running){
+        while(go){
         System.out.println("******************************************************************************");
-        System.out.println("1. zobaczyc, co jest w biblioteczce                                         *" +
-                            "\n2. dodać do biblioteczki nową książkę                                       *" +
-                            "\n3. usunąć książkę z biblioteczki                                            *" +
-                            "\n4. zobaczyć listę czytanych teraz książki                                   *" +
-                            "\n5. zobaczyć listę przeczytabych książek                                     *" +
-                            "\n6. dodać książkę do listy czytane                                           *" +
-                            "\n7. dodać książkę do listy przeczytane                                       *" +
-                            "\n8. zobaczyć opinię o podanej książce                                        *" +
-                            "\n9. napisać opinię o podanej książce                                         *" +
-                            "\n10. zobaczyć listę \"książki do kupienia\"                                    *" +
-                            "\n11. dodać książkę do listy \"książki do kupienia\"                            *" +
-                            "\n12. wyświetlanie wg pewnych kategorii                                       *" +
-                            "\n13. zobaczyć dostępne statystyki                                            *" +
-                            "\n14. zabawka z watkiem                                                       *" +
-                            "\n15. wyjscie z programu                                                      *");
+        System.out.println("""
+                1. see what's in the library
+                2. add a new book to your library
+                3. remove book from library
+                4. see the list of books you are currently reading
+                5. see the list of books I would read
+                6. add book to reading list
+                7. add book to read list
+                8. see the review of the given book
+                9. write an opinion about the given book
+                10. see the list \\"books to buy\\"
+                11. add a book to the list \\ " books to buy\\"
+                12. display by certain categories
+                13. see available statistics
+                14. toy with cotton wool
+                15. exit the program""");
         System.out.println("******************************************************************************");
-        System.out.print("Wpisz polecenie: ");
-        int polecenie = scanner.nextInt();
+        System.out.print("your command (number): ");
+        int command = scanner.nextInt();
 
-        //zobaczyc ksiazki w biblioteczce
-        if(polecenie==1){
-            System.out.println("Cała biblioteczka: ");
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+        if(command==1){
+            System.out.println("The whole library: ");
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
         }
 
 
-        //dodac nowa ksiazke
-        if(polecenie==2){
-            String tytul;
+        if(command==2){
+            String title;
             do{
-                System.out.print("Wpisz tytuł książki: ");
-                tytul = scanner.nextLine();
-                } while(tytul.length()==0);
+                System.out.print("Enter the title of the book: ");
+                title = scanner.nextLine();
+                } while(title.length()==0);
 
-            System.out.print("Wpisz autora \"" + tytul + "\": ");
-            String autor = scanner.nextLine();
+            System.out.print("Enter the author \"" + title + "\": ");
+            String author = scanner.nextLine();
             boolean matches=false;
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet() ){
-                Ksiazki ksiazka = entry.getValue();
-                if(ksiazka.getTytul().equals(tytul) && ksiazka.getAutor().equals(autor)){
-                    System.out.println("Książka \"" + tytul + "\" o autorze " + autor + " już jest w biblioteczce");
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet() ){
+                Ksiazki book = entry.getValue();
+                if(book.getTytul().equals(title) && book.getAutor().equals(author)){
+                    System.out.println("Książka \"" + title + "\" o autorze " + author + " już jest w biblioteczce");
                     matches=true;
 
                 }
             }
             if(!matches){
-            System.out.println("Nie ma jeszcze takiej książki w biblioteczce");
-            System.out.print("Wpisz gatunek \"" + tytul + "\": ");
-            String gatunek = scanner.nextLine();
+            System.out.print("Enter the genre of the \"" + title + "\": ");
+            String genre = scanner.nextLine();
 
-            Ksiazki new_ksiazka = new Ksiazki();
-            new_ksiazka.setTytul(tytul);
-            new_ksiazka.setAutor(autor);
-            new_ksiazka.setGatunek(gatunek);
-            biblioteczka.getBiblioteczka().put(il++, new_ksiazka);
+            Ksiazki newBook = new Ksiazki();
+            newBook.setTytul(title);
+            newBook.setAutor(author);
+            newBook.setGatunek(genre);
+            library.getLibrary().put(countOfBooks++, newBook);
 
-            System.out.println("Teraz w biblioteczce znajduje się " + il + " książek");
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+            System.out.println("Now there are \"+ countOfBooks + \" books in the library");
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
             }
         }
 
-        //usunac ksiazke z biblioteczki
-        if(polecenie==3){
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+        if(command==3){
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
-            System.out.print("Podaj klucz książki, którą chcesz usunąć: ");
-            int input = scanner.nextInt();
+            System.out.print("Enter the id of the book you want to delete: ");
+            int booksId = scanner.nextInt();
                 try {
-                    biblioteczka.getBiblioteczka().remove(input);
+                    library.getLibrary().remove(booksId);
                 }
                 catch(Exception e){
-                    System.out.println("Błąd: " + e.getMessage());
+                    System.out.println("Error: " + e.getMessage());
                 }
         }
 
-        //zobaczyc liste czytanych ksiazek w tym momencie
-        if(polecenie==4){
-            System.out.println("Lista czytanych teraz ksizek: ");
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
+        if(command==4){
+            System.out.println("List of books you are reading now: ");
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
                 if(!entry.getValue().getCzy_czytane().isEmpty() && entry.getValue().getCzy_przeczytane().isEmpty()) {
-                    System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
-                    for(Czytane czytane: ksiazka.getCzy_czytane()){
+                    System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
+                    for(Czytane czytane: book.getCzy_czytane()){
                         System.out.println("\t\t" + czytane.getStartDate());
                     }
                 }
             }
         }
 
-        //zobaczyc liste przeczytanych ksiazek
-        if(polecenie==5){
-            System.out.println("Lista przeczytanych książek: ");
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
+        if(command==5){
+            System.out.println("List of books read: ");
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
                 if(!entry.getValue().getCzy_przeczytane().isEmpty()){
-                    System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+                    System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
                 }
             }
         }
 
-        //dodac ksiazke do czytane teraz
-        if(polecenie==6){
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+        if(command==6){
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
-            System.out.print("Podaj klucz książki, którą chcesz dodać do czytane: ");
+            System.out.print("Enter the id of the book you want to add to reading list: ");
             int input = scanner.nextInt();
-            System.out.print("Podaj datę startu (wzór: dd.mm.yyyy): ");
+            System.out.print("Enter the start date (pattern: dd. mm. yyyy):");
             Date dateStart = formatter.parse(br.readLine());
-            Czytane new_czytane = new Czytane(biblioteczka.getBiblioteczka().get(input), dateStart);
-            biblioteczka.getBiblioteczka().get(input).getCzy_czytane().add(new_czytane);
+            Czytane new_czytane = new Czytane(library.getLibrary().get(input), dateStart);
+            library.getLibrary().get(input).getCzy_czytane().add(new_czytane);
         }
 
-        //dodac ksiazke do przeczytanych
-        if(polecenie==7) {
-            System.out.println("Lista czytanych teraz ksiek: ");
-            for (Map.Entry<Integer, Ksiazki> entry : biblioteczka.getBiblioteczka().entrySet()) {
-                Ksiazki ksiazka = entry.getValue();
+        if(command==7) {
+            System.out.println("List of books read now: ");
+            for (Map.Entry<Integer, Ksiazki> entry : library.getLibrary().entrySet()) {
+                Ksiazki book = entry.getValue();
                 if (!entry.getValue().getCzy_czytane().isEmpty() && entry.getValue().getCzy_przeczytane().isEmpty()) {
-                    System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+                    System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
                 }
             }
-            System.out.print("Podaj klucz książki z czytanych książek, którą przeczytałe(-a)ś:");
+            System.out.print("Enter the book id from the books list you have read:");
             int input = scanner.nextInt();
-            System.out.print("Podaj datę końca (wzór: dd.mm.yyyy): ");
+            System.out.print("Enter end date (pattern: dd.mm.yyyy): ");
             Date dateEnd = formatter.parse(br.readLine());
-            Przeczytane new_przeczytane = new Przeczytane(biblioteczka.getBiblioteczka().get(input),dateEnd);
-            System.out.print("Czy spodobała ci się ta książka? (like tak/nie): ");
-            String czy_ulubiona;
+            Przeczytane newRead = new Przeczytane(library.getLibrary().get(input),dateEnd);
+            System.out.print("Do you like this book? (like yes/no): ");
+            String isItFavorite;
             boolean love;
             do{
-                czy_ulubiona = scanner.nextLine();
-                if(czy_ulubiona.equals("tak")) {
+                isItFavorite = scanner.nextLine();
+                if(isItFavorite.equals("yes")) {
                     love = true;
-                    new_przeczytane.setCzy_ulubiona(love);
+                    newRead.setCzy_ulubiona(love);
                     }
                     else {
                         love = false;
-                        new_przeczytane.setCzy_ulubiona(love);
+                        newRead.setCzy_ulubiona(love);
                     }
-            } while(czy_ulubiona.length()==0);
+            } while(isItFavorite.length()==0);
 
-            biblioteczka.getBiblioteczka().get(input).getCzy_przeczytane().add(new_przeczytane);
+            library.getLibrary().get(input).getCzy_przeczytane().add(newRead);
 
         }
 
-        //zobaczyc opinie o podanej ksiazce
-        if(polecenie==8){
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+        if(command==8){
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
-            System.out.print("Podaj klucz ksiazki: ");
-            int kl=scanner.nextInt();
-            File odczyt_op = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + biblioteczka.getBiblioteczka().get(kl).getTytul() + ".txt");
-            if(!odczyt_op.exists()){
-                System.out.println("Blad, nie ma opinii o tej ksiazce");
+            System.out.print("Enter book id: ");
+            int id=scanner.nextInt();
+            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + library.getLibrary().get(id).getTytul() + ".txt");
+            if(!readOpinionFile.exists()){
+                System.out.println("Sorry, there is no opinion about this book");
             }
-            else if(!odczyt_op.canRead()){
-                System.out.println("Blad, bie ma dostepu odczytu tego pliku");
+            else if(!readOpinionFile.canRead()){
+                System.out.println("Sorry, but you have not access to read it..");
             }
             else{
-                BufferedReader fin = new BufferedReader(new FileReader(odczyt_op));
+                BufferedReader tempBR = new BufferedReader(new FileReader(readOpinionFile));
                 String line;
-                while((line = fin.readLine()) != null){
+                while((line = tempBR.readLine()) != null){
                     System.out.println(line);
                 }
-                fin.close();
+                tempBR.close();
             }
         }
 
-        //napisac opinie o podanej ksiazce
-        if(polecenie==9){
-            for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                Ksiazki ksiazka = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+        if(command==9){
+            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                Ksiazki book = entry.getValue();
+                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
             }
-            System.out.print("Podaj klucz ksiazki, opinie o jakiej chcesz napisac: ");
-            int kl = scanner.nextInt();
-            File zapis_op = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + biblioteczka.getBiblioteczka().get(kl).getTytul() + ".txt");
-            BufferedWriter writer = new BufferedWriter(new FileWriter(zapis_op));
-            String text;
+            System.out.print("Enter the id of the book, which review you want to write: ");
+            int id = scanner.nextInt();
+            File writeOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + library.getLibrary().get(id).getTytul() + ".txt");
+            BufferedWriter tempWriter = new BufferedWriter(new FileWriter(writeOpinionFile));
+            String opinion;
             do{
-                text = scanner.nextLine();
-            } while (text.length()==0);
-            writer.write(text);
-            writer.close();
+                opinion = scanner.nextLine();
+            } while (opinion.length()==0);
+            tempWriter.write(opinion);
+            tempWriter.close();
         }
 
-        //zobaczyc liste ksiazek do kupienia
-        if(polecenie==10){
-            System.out.println("Lista \"Ksiazki do kupienia\"");
-            int k_il=do_kupienia.size();
+        if(command==10){
+            System.out.println("add a book to the list \" books to buy\"");
+            int listSizeToBuy=toBuy.size();
 
-            if(k_il==0){
-                System.out.println("Niestety dopoki ta lista jest pusta((");
+            if(listSizeToBuy==0){
+                System.out.println("This list is empty");
             }
-            int kup;
-            for(kup=0;kup < do_kupienia.size();kup++){
-                System.out.println("\t" + "\"" + do_kupienia.get(kup).getTytul()
-                        + "\" " + do_kupienia.get(kup).getAutor()
-                        + ", " + do_kupienia.get(kup).getGatunek()
-                        + ", " + do_kupienia.get(kup).getOslona() + " oslona");
+            for(int i=0;i < toBuy.size();i++){
+                System.out.println("\t" + "\"" + toBuy.get(i).getTytul()
+                        + "\" " + toBuy.get(i).getAutor()
+                        + ", " + toBuy.get(i).getGatunek()
+                        + ", " + toBuy.get(i).getOslona() + " oslona");
             }
         }
 
-        //dodac do listy kupic
-        if(polecenie==11){
-            Kupic new_kupic = new Kupic();
+        if(command==11){
+            Kupic newToBuy = new Kupic();
 
-            String tytul;
-            System.out.print("Wpisz tytul książki, jaką chcesz kupić: ");
-            do{tytul = scanner.nextLine();}
-                while(tytul.length()==0);
-            new_kupic.setTytul(tytul);
+            String title;
+            System.out.print("Enter the title of the book you want to buy: ");
+            do{title = scanner.nextLine();}
+                while(title.length()==0);
+            newToBuy.setTytul(title);
 
-            System.out.print("Wpisz autora \"" + tytul + "\": ");
-            String autor = scanner.nextLine();
-            new_kupic.setAutor(autor);
+            System.out.print("Enter the author of the  \"" + title + "\": ");
+            String author = scanner.nextLine();
+            newToBuy.setAutor(author);
 
-            System.out.print("Jaki jest gatunek \"" + tytul + "\"?: ");
-            String gatunek = scanner.nextLine();
-            new_kupic.setGatunek(gatunek);
+            System.out.print("What's a genre of the \"" + title + "\"?: ");
+            String genre = scanner.nextLine();
+            newToBuy.setGatunek(genre);
 
-            System.out.print("W jakie osonie chcial(-a)bys: (like twarda/miekka); ");
-            String oslona = scanner.nextLine();
-            new_kupic.setOslona(oslona);
+            System.out.print("What book cover would you prefer: (hard/soft) ");
+            String cover = scanner.nextLine();
+            newToBuy.setOslona(cover);
 
-            do_kupienia.add(new_kupic);
+            toBuy.add(newToBuy);
         }
 
-        //wyswietlenie kategorii
-        if(polecenie==12){
-            System.out.println("Dostepne wyswietlania wg kategorii: " +
-                    "\n\t1. ulubione ksiazki" +
-                    "\n\t2. wyswietlic wszystkie informacje o ksiazkach w biblioteczce");
-            int wk= scanner.nextInt();
+        if(command==12){
+            System.out.println("Available displays by category: " +
+                    "\n\t1. favorite books"
+//                    + "\n\t2. wyswietlic wszystkie informacje o ksiazkach w biblioteczce"
+                   );
+            int categoryChoice= scanner.nextInt();
 
-            if (wk==1){
-                for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
-                    Ksiazki ksiazka = entry.getValue();
-                    for(Przeczytane przeczytane: ksiazka.getCzy_przeczytane()){
-                        if(przeczytane.czy_ulubiona){
+            if (categoryChoice==1){
+                for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+                    Ksiazki book = entry.getValue();
+                    for(Przeczytane readBook: book.getCzy_przeczytane()){
+                        if(readBook.czy_ulubiona){
 
-                            System.out.println("\t " + ksiazka.getTytul()
-                            + " " + ksiazka.getAutor());
+                            System.out.println("\t " + book.getTytul()
+                            + " " + book.getAutor());
                         }
                     }
                 }
             }
             }
 
-
-
-        //wyswietlenie statystyki
-        if(polecenie==13){
-            System.out.println("Dostepne statystyki: " +
-                    "\n\t1. Ile ksiazek o podanym autorze" +
-                    "\n\t2. Ile razy czytales podana ksiazke");
+        if(command==13){
+            System.out.println("Available statistics: " +
+                    "\n\t1. How many books by the given author" +
+                    "\n\t2. How many times have you read particuler book?");
             int sw = scanner.nextInt();
             if(sw==1){
-                for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()) {
+                for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()) {
                     Ksiazki ksiazka = entry.getValue();
                     System.out.println(ksiazka.getAutor());
-                    for(Map.Entry<Integer, Ksiazki> entry0:biblioteczka.getBiblioteczka().entrySet()){
+                    for(Map.Entry<Integer, Ksiazki> entry0:library.getLibrary().entrySet()){
                         Ksiazki ksiazka0 = entry0.getValue();
                         if(!ksiazka.getAutor().equals(ksiazka0.getAutor())){
                             System.out.println(ksiazka0.getAutor());
@@ -313,7 +298,7 @@ public class main {
                     }
                     while (pod_aut.length() == 0);
                     int p = 0;
-                    for (Map.Entry<Integer, Ksiazki> entry : biblioteczka.getBiblioteczka().entrySet()) {
+                    for (Map.Entry<Integer, Ksiazki> entry : library.getLibrary().entrySet()) {
                         Ksiazki ksiazka = entry.getValue();
                         if (ksiazka.getAutor().equals(pod_aut)) {
                             System.out.println(p++ + ". " + ksiazka.getTytul());
@@ -322,14 +307,14 @@ public class main {
                     System.out.println("Czyli jest " + p + " ksiazek w biblioteczce o autorze " + pod_aut);
             }
             if(sw==2){
-                for(Map.Entry<Integer, Ksiazki> entry:biblioteczka.getBiblioteczka().entrySet()){
+                for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
                     Ksiazki ksiazka = entry.getValue();
                     System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
                 }
                 System.out.print("Podaj klucz ksiazki: ");
                 int kl = scanner.nextInt();
                 int p=0;
-                Ksiazki ksiazka = biblioteczka.getBiblioteczka().get(kl);
+                Ksiazki ksiazka = library.getLibrary().get(kl);
                 System.out.println(ksiazka.getTytul() + " byla przeczytana: ");
                 for(Przeczytane przeczytana: ksiazka.getCzy_przeczytane()){
                     System.out.println("\t" + p++ + ". " + przeczytana.getEndDate());
@@ -339,16 +324,16 @@ public class main {
         }
 
         //wateczek))
-        if(polecenie==14){
+        if(command==14){
             System.out.println("No coz, zdecydowale(-a)s na zabawke..(zabawka polega na tym, ze w miedzyczasie pojawia sie komunikat, jaka ksiazke chce przeczytac teraz. )");
-            int size=biblioteczka.getBiblioteczka().size();
+            int size=library.getLibrary().size();
 
             for (int j = 1; j < 3; j++) {
                     int w = (int) (Math.random() * size);
-                    Watek watek1 = new Watek(biblioteczka.getBiblioteczka().get(w));
+                    Watek watek1 = new Watek(library.getLibrary().get(w));
                     watek1.start();
                     w=(int) (Math.random() * size);
-                    Watek watek2 = new Watek(biblioteczka.getBiblioteczka().get(w % 3));
+                    Watek watek2 = new Watek(library.getLibrary().get(w % 3));
                     watek2.start();
 
                 }
@@ -356,7 +341,7 @@ public class main {
         }
 
         //wyjscie z programu
-        if(polecenie==15){
+        if(command==15){
             System.exit(0);
         }
 
