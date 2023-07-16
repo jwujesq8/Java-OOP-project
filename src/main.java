@@ -19,10 +19,9 @@ public class main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Your library");
-        boolean go = true;
         List<Kupic> toBuy = new ArrayList<>();
 
-        while(go){
+        while(true){
         System.out.println("******************************************************************************");
         System.out.println("""
                 1. see what's in the library
@@ -276,82 +275,72 @@ public class main {
         if(command==13){
             System.out.println("Available statistics: " +
                     "\n\t1. How many books by the given author" +
-                    "\n\t2. How many times have you read particuler book?");
-            int sw = scanner.nextInt();
-            if(sw==1){
+                    "\n\t2. How many times have you read this particular book?");
+            int statisticsChoice = scanner.nextInt();
+            if(statisticsChoice==1){
                 for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()) {
-                    Ksiazki ksiazka = entry.getValue();
-                    System.out.println(ksiazka.getAutor());
+                    Ksiazki book = entry.getValue();
+                    System.out.println(book.getAutor());
                     for(Map.Entry<Integer, Ksiazki> entry0:library.getLibrary().entrySet()){
-                        Ksiazki ksiazka0 = entry0.getValue();
-                        if(!ksiazka.getAutor().equals(ksiazka0.getAutor())){
-                            System.out.println(ksiazka0.getAutor());
-                            ksiazka=entry0.getValue();
+                        Ksiazki book0 = entry0.getValue();
+                        if(!book.getAutor().equals(book0.getAutor())){
+                            System.out.println(book0.getAutor());
+                            book=entry0.getValue();
                         }
                     }
                     break;
                     }
-                    System.out.print("Podaj imie i nazwisko jednego z podanych autorow: ");
-                    String pod_aut;
+                    System.out.print("Enter the name of one of the authors: ");
+                    String authorForStatistics;
                     do {
-                        pod_aut = scanner.nextLine();
+                        authorForStatistics = scanner.nextLine();
                     }
-                    while (pod_aut.length() == 0);
-                    int p = 0;
+                    while (authorForStatistics.length() == 0);
+                    int booksCountByAuthor = 0;
                     for (Map.Entry<Integer, Ksiazki> entry : library.getLibrary().entrySet()) {
-                        Ksiazki ksiazka = entry.getValue();
-                        if (ksiazka.getAutor().equals(pod_aut)) {
-                            System.out.println(p++ + ". " + ksiazka.getTytul());
+                        Ksiazki book = entry.getValue();
+                        if (book.getAutor().equals(authorForStatistics)) {
+                            System.out.println(booksCountByAuthor++ + ". " + book.getTytul());
                         }
                     }
-                    System.out.println("Czyli jest " + p + " ksiazek w biblioteczce o autorze " + pod_aut);
+                    System.out.println("There are " + booksCountByAuthor + " book by " + authorForStatistics + " in the library");
             }
-            if(sw==2){
+            if(statisticsChoice==2){
                 for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
-                    Ksiazki ksiazka = entry.getValue();
-                    System.out.println("\t" + entry.getKey() + ". " + ksiazka.getTytul() + " " + ksiazka.getAutor());
+                    Ksiazki book = entry.getValue();
+                    System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
                 }
-                System.out.print("Podaj klucz ksiazki: ");
-                int kl = scanner.nextInt();
-                int p=0;
-                Ksiazki ksiazka = library.getLibrary().get(kl);
-                System.out.println(ksiazka.getTytul() + " byla przeczytana: ");
-                for(Przeczytane przeczytana: ksiazka.getCzy_przeczytane()){
-                    System.out.println("\t" + p++ + ". " + przeczytana.getEndDate());
+                System.out.print("Enter the book id: ");
+                int id = scanner.nextInt();
+                int times=0;
+                Ksiazki book = library.getLibrary().get(id);
+                System.out.println(book.getTytul() + " byla przeczytana: ");
+                for(Przeczytane read: book.getCzy_przeczytane()){
+                    System.out.println("\t" + times++ + ". " + read.getEndDate());
                 }
-                System.out.println("Czyli przeczytale(-a)s " + p + "razy te ksiazke");
+                System.out.println("You've read it " + times + " times");
             }
         }
 
-        //wateczek))
         if(command==14){
-            System.out.println("No coz, zdecydowale(-a)s na zabawke..(zabawka polega na tym, ze w miedzyczasie pojawia sie komunikat, jaka ksiazke chce przeczytac teraz. )");
+            System.out.println("Well, definitely on the toy.." +
+                    "(there is a message which book you want to read now in meantime)");
             int size=library.getLibrary().size();
 
             for (int j = 1; j < 3; j++) {
-                    int w = (int) (Math.random() * size);
-                    Watek watek1 = new Watek(library.getLibrary().get(w));
-                    watek1.start();
-                    w=(int) (Math.random() * size);
-                    Watek watek2 = new Watek(library.getLibrary().get(w % 3));
-                    watek2.start();
+                    int randomBook = (int) (Math.random() * size);
+                    Watek thread1 = new Watek(library.getLibrary().get(randomBook));
+                    thread1.start();
+                    randomBook=(int) (Math.random() * size);
+                    Watek thread2 = new Watek(library.getLibrary().get(randomBook % 3));
+                    thread2.start();
 
                 }
 
         }
-
-        //wyjscie z programu
         if(command==15){
             System.exit(0);
         }
-
-
-
-
-
-
-
     }
     }
-
 }
