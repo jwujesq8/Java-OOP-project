@@ -7,11 +7,14 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 public class main {
     public static void main (String[] args) throws Exception{
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\zhuko\\IdeaProjects\\projekt\\biblioteczka.bin");
+        MyFileWriter fileWriter = new MyFileWriter("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
+        fileWriter.getContent();
+        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
         Library library = (Library) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
+
 
         int countOfBooks=15;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -28,13 +31,13 @@ public class main {
                 2. add a new book to your library
                 3. remove book from library
                 4. see the list of books you are currently reading
-                5. see the list of books I would read
+                5. see the list of books I have read
                 6. add book to reading list
                 7. add book to read list
                 8. see the review of the given book
                 9. write an opinion about the given book
-                10. see the list \\"books to buy\\"
-                11. add a book to the list \\ " books to buy\\"
+                10. see the list \"books to buy\"
+                11. add a book to the list \"books to buy\"
                 12. display by certain categories
                 13. see available statistics
                 14. toy with cotton wool
@@ -59,13 +62,13 @@ public class main {
                 title = scanner.nextLine();
                 } while(title.length()==0);
 
-            System.out.print("Enter the author \"" + title + "\": ");
+            System.out.print("Enter the author of the \"" + title + "\": ");
             String author = scanner.nextLine();
             boolean matches=false;
             for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet() ){
                 Ksiazki book = entry.getValue();
                 if(book.getTytul().equals(title) && book.getAutor().equals(author)){
-                    System.out.println("Książka \"" + title + "\" o autorze " + author + " już jest w biblioteczce");
+                    System.out.println("The book \"" + title + "\" by " + author + " already exists in your library");
                     matches=true;
 
                 }
@@ -178,7 +181,7 @@ public class main {
             }
             System.out.print("Enter book id: ");
             int id=scanner.nextInt();
-            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + library.getLibrary().get(id).getTytul() + ".txt");
+            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" + library.getLibrary().get(id).getTytul() + ".txt");
             if(!readOpinionFile.exists()){
                 System.out.println("Sorry, there is no opinion about this book");
             }

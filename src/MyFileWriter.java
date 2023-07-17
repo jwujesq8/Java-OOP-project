@@ -1,10 +1,17 @@
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
-public class FileWriter{
-    public static void main(String args[]) throws Exception {
-        Biblioteczka biblioteczka = new Biblioteczka();
+
+public class MyFileWriter{
+    public String file;
+    public MyFileWriter(String fileName) {
+        this.file = fileName;
+    }
+
+    public void getContent() throws Exception {
+        Library library = new Library();
 
         int il=0;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -17,13 +24,13 @@ public class FileWriter{
         ksiazka1.getCzy_czytane().add(czytane1);
             Przeczytane przeczytane1 = new Przeczytane(ksiazka1,formatter.parse("27.06.2021"),true);
             ksiazka1.getCzy_przeczytane().add(przeczytane1);
-        biblioteczka.getBiblioteczka().put(il++, ksiazka1);
+        library.getLibrary().put(il++, ksiazka1);
 
         Ksiazki ksiazka2 = new Ksiazki();
         ksiazka2.setTytul("Idiota");
         ksiazka2.setAutor("Fiodor Dostojewski");
         ksiazka2.setGatunek("Powieść");
-        biblioteczka.getBiblioteczka().put(il++,ksiazka2);
+        library.getLibrary().put(il++,ksiazka2);
 
         Ksiazki ksiazka3 = new Ksiazki();
         ksiazka3.setTytul("Gracz");
@@ -33,7 +40,7 @@ public class FileWriter{
         ksiazka3.getCzy_czytane().add(czytane3);
             Przeczytane przeczytane3 = new Przeczytane(ksiazka3,formatter.parse("22.05.2022"),true);
             ksiazka3.getCzy_przeczytane().add(przeczytane3);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka3);
+        library.getLibrary().put(il++,ksiazka3);
 
         Ksiazki ksiazka4 = new Ksiazki();
         ksiazka4.setTytul("Bracia Karamazow");
@@ -43,7 +50,7 @@ public class FileWriter{
         ksiazka4.getCzy_czytane().add(czytane4);
             Przeczytane przeczytane4 = new Przeczytane(ksiazka4, formatter.parse("19.09.2021"),false);
             ksiazka4.getCzy_przeczytane().add(przeczytane4);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka4);
+        library.getLibrary().put(il++,ksiazka4);
 
         Ksiazki ksiazka5 = new Ksiazki();
         ksiazka5.setTytul("Zbrodnia i kara");
@@ -57,7 +64,7 @@ public class FileWriter{
         ksiazka5.getCzy_czytane().add(czytane5_2);
             Przeczytane przeczytane5_2 = new Przeczytane(ksiazka5, formatter.parse("07.04.2021"));
             ksiazka5.getCzy_przeczytane().add(przeczytane5_2);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka5);
+        library.getLibrary().put(il++,ksiazka5);
 
         Ksiazki ksiazka6 = new Ksiazki();
         ksiazka6.setTytul("Sen śmiesznego człowieka");
@@ -75,7 +82,7 @@ public class FileWriter{
         ksiazka6.getCzy_czytane().add(czytane6_3);
             Przeczytane przeczytane6_3 = new Przeczytane(ksiazka6, formatter.parse("17.07.2021"));
             ksiazka6.getCzy_przeczytane().add(przeczytane6_3);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka6);
+        library.getLibrary().put(il++,ksiazka6);
 
         Ksiazki ksiazka7 = new Ksiazki();
         ksiazka7.setTytul("Biale noce");
@@ -89,7 +96,7 @@ public class FileWriter{
         ksiazka7.getCzy_czytane().add(czytane7_2);
             Przeczytane przeczytane7_2 = new Przeczytane(ksiazka7, formatter.parse("10.04.2022"));
             ksiazka7.getCzy_przeczytane().add(przeczytane7_2);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka7);
+        library.getLibrary().put(il++,ksiazka7);
 
         Ksiazki ksiazka8 = new Ksiazki();
         ksiazka8.setTytul("O sztuce milosci");
@@ -99,7 +106,7 @@ public class FileWriter{
         ksiazka8.getCzy_czytane().add(czytane8);
             Przeczytane przeczytane8 = new Przeczytane(ksiazka8, formatter.parse("19.03.2021"), true);
             ksiazka8.getCzy_przeczytane().add(przeczytane8);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka8);
+        library.getLibrary().put(il++,ksiazka8);
 
         Ksiazki ksiazka9 = new Ksiazki();
         ksiazka9.setTytul("Zbior wierszow");
@@ -109,7 +116,7 @@ public class FileWriter{
         ksiazka9.getCzy_czytane().add(czytane9);
             Przeczytane przeczytane9 = new Przeczytane(ksiazka9, formatter.parse("11.11.2021"), false);
             ksiazka9.getCzy_przeczytane().add(przeczytane9);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka9);
+        library.getLibrary().put(il++,ksiazka9);
 
         Ksiazki ksiazka10 = new Ksiazki();
         ksiazka10.setTytul("Rok 1984");
@@ -119,7 +126,7 @@ public class FileWriter{
         ksiazka10.getCzy_czytane().add(czytane10);
             Przeczytane przeczytane10 = new Przeczytane(ksiazka10, formatter.parse("27.02.2022"), false);
             ksiazka10.getCzy_przeczytane().add(przeczytane10);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka10);
+        library.getLibrary().put(il++,ksiazka10);
 
         Ksiazki ksiazka11 = new Ksiazki();
         ksiazka11.setTytul("Folwark zwierzecy");
@@ -129,7 +136,7 @@ public class FileWriter{
         ksiazka11.getCzy_czytane().add(czytane11);
             Przeczytane przeczytane11 = new Przeczytane(ksiazka11, formatter.parse("13.03.2022"), false);
             ksiazka11.getCzy_przeczytane().add(przeczytane11);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka11);
+        library.getLibrary().put(il++,ksiazka11);
 
         Ksiazki ksiazka12 = new Ksiazki();
         ksiazka12.setTytul("Morfina");
@@ -139,7 +146,7 @@ public class FileWriter{
         ksiazka12.getCzy_czytane().add(czytane12);
             Przeczytane przeczytane12 = new Przeczytane(ksiazka12, formatter.parse("16.03.2022"), true);
             ksiazka12.getCzy_przeczytane().add(przeczytane12);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka12);
+        library.getLibrary().put(il++,ksiazka12);
 
         Ksiazki ksiazka13 = new Ksiazki();
         ksiazka13.setTytul("Notatki lekarza");
@@ -149,7 +156,7 @@ public class FileWriter{
         ksiazka13.getCzy_czytane().add(czytane13);
             Przeczytane przeczytane13 = new Przeczytane(ksiazka13, formatter.parse("25.03.2022"), true);
             ksiazka13.getCzy_przeczytane().add(przeczytane13);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka13);
+        library.getLibrary().put(il++,ksiazka13);
 
         Ksiazki ksiazka14 = new Ksiazki();
         ksiazka14.setTytul("Zapiski na mankietach");
@@ -159,7 +166,7 @@ public class FileWriter{
         ksiazka14.getCzy_czytane().add(czytane14);
             Przeczytane przeczytane14 = new Przeczytane(ksiazka14, formatter.parse("05.04.2022"), false);
             ksiazka14.getCzy_przeczytane().add(przeczytane14);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka14);
+        library.getLibrary().put(il++,ksiazka14);
 
         Ksiazki ksiazka15 = new Ksiazki();
         ksiazka15.setTytul("Nocny lot");
@@ -167,14 +174,14 @@ public class FileWriter{
         ksiazka15.setGatunek("Nowela");
         Czytane czytane15 = new Czytane(ksiazka15, formatter.parse("24.04.2022"));
         ksiazka15.getCzy_czytane().add(czytane15);
-        biblioteczka.getBiblioteczka().put(il++,ksiazka15);
+        library.getLibrary().put(il++,ksiazka15);
 
 
-        FileOutputStream fileOutputStream = new FileOutputStream("C:\\Users\\zhuko\\IdeaProjects\\projekt\\biblioteczka.bin");
+        FileOutputStream fileOutputStream = new FileOutputStream(file);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(biblioteczka);
+        objectOutputStream.writeObject(library);
         objectOutputStream.flush();
         objectOutputStream.close();
         fileOutputStream.close();
 
-}}
+    }}
