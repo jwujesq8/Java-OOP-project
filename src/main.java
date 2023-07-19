@@ -7,13 +7,11 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 public class main {
     public static void main (String[] args) throws Exception{
-        MyFileWriter fileWriter = new MyFileWriter("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
-        fileWriter.getContent();
-        FileInputStream fileInputStream = new FileInputStream("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        Library library = (Library) objectInputStream.readObject();
-        objectInputStream.close();
-        fileInputStream.close();
+        MyFileWriter booksFileWriter = new MyFileWriter("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
+        booksFileWriter.setContent();
+
+        MyFileReader booksFileReader = new MyFileReader("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
+        Library library = booksFileReader.getContent();
 
 
         int countOfBooks=15;

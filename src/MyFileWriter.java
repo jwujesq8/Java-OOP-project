@@ -10,7 +10,7 @@ public class MyFileWriter{
         this.file = fileName;
     }
 
-    public void getContent() throws Exception {
+    public void setContent() throws Exception {
         Library library = new Library();
 
         int il=0;
