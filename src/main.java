@@ -11,15 +11,15 @@ public class main {
         booksFileWriter.setContent();
 
         MyFileReader booksFileReader = new MyFileReader("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
-        Library library = booksFileReader.getContent();
+        Library library = new Library(booksFileReader.getContent());
 
 
-        int countOfBooks=15;
+        int countOfBooks = library.getSize();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Your library");
+        System.out.println("_________Your library App_________");
         List<Kupic> toBuy = new ArrayList<>();
 
         while(true){
@@ -44,12 +44,16 @@ public class main {
         System.out.print("your command (number): ");
         int command = scanner.nextInt();
 
+        //see what's in the library
         if(command==1){
             System.out.println("The whole library: ");
-            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
-                Ksiazki book = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
-            }
+            int i =0;
+            library.printLibrary();
+
+//            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
+//                Ksiazki book = entry.getValue();
+//                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
+//            }
         }
 
 
@@ -63,14 +67,20 @@ public class main {
             System.out.print("Enter the author of the \"" + title + "\": ");
             String author = scanner.nextLine();
             boolean matches=false;
-            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet() ){
-                Ksiazki book = entry.getValue();
+
+            for(Ksiazki book: library.getLibrary()){
                 if(book.getTytul().equals(title) && book.getAutor().equals(author)){
                     System.out.println("The book \"" + title + "\" by " + author + " already exists in your library");
                     matches=true;
-
                 }
             }
+//            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet() ){
+//                Ksiazki book = entry.getValue();
+//                if(book.getTytul().equals(title) && book.getAutor().equals(author)){
+//                    System.out.println("The book \"" + title + "\" by " + author + " already exists in your library");
+//                    matches=true;
+//                }
+//            }
             if(!matches){
             System.out.print("Enter the genre of the \"" + title + "\": ");
             String genre = scanner.nextLine();
@@ -79,21 +89,16 @@ public class main {
             newBook.setTytul(title);
             newBook.setAutor(author);
             newBook.setGatunek(genre);
-            library.getLibrary().put(countOfBooks++, newBook);
+            library.addBook(newBook);
+            countOfBooks++;
 
-            System.out.println("Now there are \"+ countOfBooks + \" books in the library");
-            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
-                Ksiazki book = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
-            }
+            System.out.println("Now there are "+ countOfBooks + " books in the library now");
+            library.printLibrary();
             }
         }
 
         if(command==3){
-            for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
-                Ksiazki book = entry.getValue();
-                System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
-            }
+            library.printLibrary();
             System.out.print("Enter the id of the book you want to delete: ");
             int booksId = scanner.nextInt();
                 try {
