@@ -7,10 +7,10 @@ public class MyFileReader {
     public String file;
 
     public MyFileReader(String fileName) {this.file = fileName;}
-    public List<Ksiazki> getContent() throws Exception {
+    public Library getContent() throws Exception {
         FileInputStream fileInputStream = new FileInputStream(file);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        List<Ksiazki> library = (List<Ksiazki>) objectInputStream.readObject();
+        Library library = (Library) objectInputStream.readObject();
         objectInputStream.close();
         fileInputStream.close();
         return library;
