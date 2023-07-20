@@ -30,6 +30,7 @@ public class MyFileWriter{
         Reading reading3 = new Reading(library.getSize()-1, formatter.parse("15.04.2022"));
         library.addReadingList(reading3);
             library.addReadList(reading3, formatter.parse("22.05.2022"),true);
+        library.addOpinionsList(book3.getTitle() + ", " + book3.getAuthor());
 
 
         Book book4 = new Book("Bracia Karamazow", "Fiodor Dostojewski", "Powieść");
@@ -37,6 +38,7 @@ public class MyFileWriter{
         Reading reading4 = new Reading(library.getSize()-1, formatter.parse("30.07.2021"));
         library.addReadingList(reading4);
             library.addReadList(reading4, formatter.parse("19.09.2021"),false);
+        library.addOpinionsList(book4.getTitle() + ", " + book4.getAuthor());
 
 
         Book book5 = new Book("Zbrodnia i kara", "Fiodor Dostojewski", "Powieść");
@@ -59,6 +61,7 @@ public class MyFileWriter{
         Reading reading6_3 = new Reading(library.getSize()-1, formatter.parse("17.07.2021"));
         library.addReadingList(reading6_3);
             library.addReadList(reading6_3, formatter.parse("17.07.2021"));
+        library.addOpinionsList(book6.getTitle() + ", " + book6.getAuthor());
 
         Book book7 = new Book("Biale noce", "Fiodor Dostojewski", "Opowiadanie");
         library.addBook(book7);

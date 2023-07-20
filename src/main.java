@@ -23,7 +23,7 @@ public class main {
         System.out.println("_________Your library App_________");
 
         while(true){
-        System.out.println("******************************************************************************");
+        System.out.println("\n******************************************************************************");
         System.out.println("""
                 1. see what's in the library
                 2. add a new book to your library
@@ -34,12 +34,13 @@ public class main {
                 7. add book to read list
                 8. see the review of the given book
                 9. write an opinion about the given book
-                10. see the list \"books to buy\"
-                11. add a book to the list \"books to buy\"
-                12. display by certain categories
-                13. see available statistics
-                14. toy with cotton wool
-                15. exit the program""");
+                10. delete the opinion about the given book
+                11. see the list \"books to buy\"
+                12. add a book to the list \"books to buy\"
+                13. display by certain categories
+                14. see available statistics
+                15. toy with cotton wool
+                16. exit the program""");
         System.out.println("******************************************************************************");
         System.out.print("your command (number): ");
         int command = scanner.nextInt();
@@ -96,7 +97,7 @@ public class main {
 
         //see the list of books I have read
         if(command==5){
-            System.out.println("List of books read: ");
+            System.out.println("List of read books: ");
             library.printReadList();
         }
 
@@ -136,11 +137,14 @@ public class main {
 
         //see the review of the given book
         if(command==8){
-            library.printLibrary();
-            System.out.print("Enter the book id: ");
-            int inputId=scanner.nextInt();
+            library.printOpinionsList();
+            System.out.print("Enter the number of the book which review you want to read: ");
+            int number =scanner.nextInt();
+            String titleAndAuthor = library.getOpinionsList().get(number);
+            Book bookForOpinion = library.findBookByTitleAndAuthor(titleAndAuthor);
 
-            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" + library.getLibrary().get(inputId).getTitle() + ".txt");
+            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                    bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
             if(!readOpinionFile.exists()){
                 System.out.println("Sorry, there is no opinion about this book");
             }
@@ -160,10 +164,12 @@ public class main {
         //write an opinion about the given book
         if(command==9){
             library.printLibrary();
-            System.out.print("Enter the id of the book, which review you want to write: ");
+            System.out.print("Enter the id of the book, which review you want to (re)write: ");
             int inputId = scanner.nextInt();
+            Book bookForOpinion = library.getLibrary().get(inputId);
 
-            File writeOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\" + library.getLibrary().get(inputId).getTitle() + ".txt");
+            File writeOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                    bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
             BufferedWriter tempWriter = new BufferedWriter(new FileWriter(writeOpinionFile));
             String opinion;
             do{
@@ -171,10 +177,26 @@ public class main {
             } while (opinion.length()==0);
             tempWriter.write(opinion);
             tempWriter.close();
+            library.addOpinionsList(bookForOpinion.getTitle() + ", " + bookForOpinion.getAuthor());
+        }
+
+        //delete the opinion about the given book
+        if(command==10){
+            library.printOpinionsList();
+            System.out.print("Enter the id of the book, which review you want to delete: ");
+            int number = scanner.nextInt();
+            String titleAndAuthor = library.getOpinionsList().get(number);
+            Book bookForDeletingOpinion = library.findBookByTitleAndAuthor(titleAndAuthor);
+
+            File deleteOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                    bookForDeletingOpinion.getTitle() + "__" + bookForDeletingOpinion.getAuthor() + ".txt");
+            if(deleteOpinionFile.delete()) {
+                System.out.println(deleteOpinionFile.getName() + " -  deleted");
+            } else System.out.println("failed");
         }
 
         //see the list "books to buy"
-        if(command==10){
+        if(command==11){
             System.out.println("the list \"books to buy\"");
             int listSizeToBuy=library.getBuyList().size();
 
@@ -184,7 +206,7 @@ public class main {
         }
 
         //add a book to the list "books to buy"
-        if(command==11){
+        if(command==12){
 
             String title;
             System.out.print("Enter the title of the book you want to buy: ");
@@ -204,11 +226,12 @@ public class main {
         }
 
         //display by certain categories
-        if(command==12){
+        if(command==13){
             System.out.println("Available displays by category: " +
                     "\n\t1. favorite books"
 //                    + "\n\t2. wyswietlic wszystkie informacje o ksiazkach w biblioteczce"
                    );
+            System.out.print("\tChoose the category: ");
             int categoryChoice= scanner.nextInt();
 
             if (categoryChoice==1){
@@ -222,18 +245,19 @@ public class main {
         }
 
         //see available statistics
-        if(command==13){
+        if(command==14){
             System.out.println("""
                     Available statistics:\s
                     \t1. How many books by the given author
                     \t2. How many times have you read this particular book""");
+            System.out.print("\tChoose statistics: ");
             int statisticsChoice = scanner.nextInt();
 
             //How many books by the given author
             if(statisticsChoice==1){
                 System.out.println("Available authors:");
-                library.getAuthorsFromTheLibrary();
-                System.out.println("Enter the author: ");
+                library.printAuthorsList();
+                System.out.print("Enter the author: ");
                 String inputAuthor;
                 do{
                     inputAuthor = scanner.nextLine();
@@ -253,7 +277,7 @@ public class main {
         }
 
         //toy with cotton wool
-        if(command==14){
+        if(command==15){
             System.out.println("Well, definitely on the toy.." +
                     "(there is a message which book you want to read now in meantime)");
             int size=library.getSize()-1;
@@ -271,7 +295,7 @@ public class main {
         }
 
         //exit the program
-        if(command==15){
+        if(command==16){
             System.exit(0);
         }
     }

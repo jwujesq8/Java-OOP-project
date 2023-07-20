@@ -7,12 +7,14 @@ public class Library implements Serializable {
     private List<Read> readList;
     private List<Buy> buyList;
     private List<String> authorsList;
+    private List<String> opinionsList;
     public Library(){
         this.library = new ArrayList<>();
         this.readingList = new ArrayList<>();
         this.readList = new ArrayList<>();
         this.buyList = new ArrayList<>();
         this.authorsList = new ArrayList<>();
+        this.opinionsList = new ArrayList<>();
     }
 
 
@@ -26,6 +28,8 @@ public class Library implements Serializable {
     public List<Read> getReadList(){return readList;}
 
     public List<Buy> getBuyList(){return buyList;}
+
+    public List<String> getOpinionsList(){return opinionsList;}
 
     public void addBook(Book newBook){
         library.add(newBook);
@@ -45,6 +49,10 @@ public class Library implements Serializable {
         buyList.add(newBuy);
     }
 
+    public void addOpinionsList(String fileName){
+        opinionsList.add(fileName);
+    }
+
     public int getSize(){ return library.size();}
 
     public void printLibrary(){
@@ -55,21 +63,32 @@ public class Library implements Serializable {
         }
     }
     public void printReadingList(){
-        int i = 0;
-        for(Reading reading:readingList){
-            Book readingBook = library.get(reading.getBooksId());
-            System.out.println("\t(" + i + ") " + readingBook.getTitle() + ", " + readingBook.getAuthor() +
-                    "\n\t\tstart: " + reading.getStartDate());
-            i++;
+        if(!readingList.isEmpty()){
+            int i = 0;
+            for(Reading reading:readingList){
+                if(reading.getBooksId()<library.size()){
+                    Book readingBook = library.get(reading.getBooksId());
+                    System.out.println("\t(" + i + ") " + readingBook.getTitle() + ", " + readingBook.getAuthor() + " (" + readingBook.getGenre() + ")" +
+                            "\n\t\t\tstart: " + reading.getStartDate());
+                    i++;
+                } else System.out.println("\t(-) deleted book from the library" +
+                        "\n\t\t\tstart: " + reading.getStartDate());
+            }
         }
     }
     public void printReadList(){
         int i = 0;
         for(Read read:readList){
-            Book readBook = library.get(read.getBooksId());
-            System.out.println("\t(" + i + ") " + readBook.getTitle() + ", " + readBook.getAuthor() +
-                    "\n\t\tstart: " + read.getStartDate() + ", end: " + read.getEndDate());
-            i++;
+            if(read.getBooksId()<library.size()){
+                Book readBook = library.get(read.getBooksId());
+                System.out.println("\t(" + i + ") " + readBook.getTitle() + ", " + readBook.getAuthor() +
+                        "\n\t\t\tstart: " + read.getStartDate() + ", end: " + read.getEndDate());
+                i++;
+            } else System.out.println("\t(-) deleted book from the library" +
+                    "\n\t\t\tstart: " + read.getStartDate() + ", end: " + read.getEndDate());
+
+
+
         }
     }
     public void printBuyList(){
@@ -81,6 +100,24 @@ public class Library implements Serializable {
         }
     }
 
+    public void printOpinionsList(){
+        int i=0;
+        for(String filaName: opinionsList){
+            System.out.println("\t(" + i + ") " + filaName);
+            i++;
+        }
+    }
+
+    public Book findBookByTitleAndAuthor(String titleAndAuthor){
+        String[] parts = titleAndAuthor.split(", ");
+        String title = parts[0];
+        String author = parts[1];
+        for(Book book:library){
+            if(book.getTitle().equals(title) && book.getAuthor().equals(author)) return book;
+        }
+        return null;
+    }
+
     public boolean findMatchBookInTheLibrary(String title, String author){
         for(Book book:library){
             if(book.getTitle().equals(title) && book.getAuthor().equals(author)) return true;
@@ -90,14 +127,19 @@ public class Library implements Serializable {
 
     public void getAuthorsFromTheLibrary(){
         for(Book book: library){
-            if(!authorsList.contains(book.author)){
-                System.out.println("\t" + book.getAuthor());
-                authorsList.add(book.author);
-            }
+            if(!authorsList.contains(book.author)) authorsList.add(book.author);
+        }
+    }
+
+    public void printAuthorsList(){
+        getAuthorsFromTheLibrary();
+        for(String author: authorsList){
+            System.out.println("\t" + author);
         }
     }
 
     public void statisticsHowManyBooksByTheGivenAuthor(String author){
+        getAuthorsFromTheLibrary();
         if(authorsList.contains(author)){
             int i=1;
             for(Book book: library){
