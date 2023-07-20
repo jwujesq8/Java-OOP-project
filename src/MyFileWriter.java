@@ -2,6 +2,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MyFileWriter{
@@ -12,170 +14,115 @@ public class MyFileWriter{
 
     public void setContent() throws Exception {
         Library library = new Library();
-
-        int il=0;
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
-        Ksiazki ksiazka1 = new Ksiazki();
-        ksiazka1.setTytul("Biesy");
-        ksiazka1.setAutor("Fiodor Dostojewski");
-        ksiazka1.setGatunek("Powieść");
-        Czytane czytane1 = new Czytane(ksiazka1, formatter.parse("02.04.2021"));
-        ksiazka1.getCzy_czytane().add(czytane1);
-            Przeczytane przeczytane1 = new Przeczytane(ksiazka1,formatter.parse("27.06.2021"),true);
-            ksiazka1.getCzy_przeczytane().add(przeczytane1);
-        library.getLibrary().put(il++, ksiazka1);
+        Book book1 = new Book("Biesy", "Fiodor Dostojewski", "Powieść");
+        library.addBook(book1);
+        Reading reading1 = new Reading(library.getSize()-1, formatter.parse("02.04.2021"));
+        library.addReadingList(reading1);
+            library.addReadList(reading1, formatter.parse("27.06.2021"),true);
 
-        Ksiazki ksiazka2 = new Ksiazki();
-        ksiazka2.setTytul("Idiota");
-        ksiazka2.setAutor("Fiodor Dostojewski");
-        ksiazka2.setGatunek("Powieść");
-        library.getLibrary().put(il++,ksiazka2);
+        Book book2 = new Book("Idiota", "Fiodor Dostojewski","Powieść");
+        library.addBook(book2);
 
-        Ksiazki ksiazka3 = new Ksiazki();
-        ksiazka3.setTytul("Gracz");
-        ksiazka3.setAutor("Fiodor Dostojewski");
-        ksiazka3.setGatunek("Powieść");
-        Czytane czytane3 = new Czytane(ksiazka3, formatter.parse("15.04.2022"));
-        ksiazka3.getCzy_czytane().add(czytane3);
-            Przeczytane przeczytane3 = new Przeczytane(ksiazka3,formatter.parse("22.05.2022"),true);
-            ksiazka3.getCzy_przeczytane().add(przeczytane3);
-        library.getLibrary().put(il++,ksiazka3);
+        Book book3 = new Book("Gracz", "Fiodor Dostojewski","Powieść");
+        library.addBook(book3);
+        Reading reading3 = new Reading(library.getSize()-1, formatter.parse("15.04.2022"));
+        library.addReadingList(reading3);
+            library.addReadList(reading3, formatter.parse("22.05.2022"),true);
+        library.addOpinionsList(book3.getTitle() + ", " + book3.getAuthor());
 
-        Ksiazki ksiazka4 = new Ksiazki();
-        ksiazka4.setTytul("Bracia Karamazow");
-        ksiazka4.setAutor("Fiodor Dostojewski");
-        ksiazka4.setGatunek("Powieść");
-        Czytane czytane4 = new Czytane(ksiazka4, formatter.parse("30.07.2021"));
-        ksiazka4.getCzy_czytane().add(czytane4);
-            Przeczytane przeczytane4 = new Przeczytane(ksiazka4, formatter.parse("19.09.2021"),false);
-            ksiazka4.getCzy_przeczytane().add(przeczytane4);
-        library.getLibrary().put(il++,ksiazka4);
 
-        Ksiazki ksiazka5 = new Ksiazki();
-        ksiazka5.setTytul("Zbrodnia i kara");
-        ksiazka5.setAutor("Fiodor Dostojewski");
-        ksiazka5.setGatunek("Powieść");
-        Czytane czytane5_1 = new Czytane(ksiazka5, formatter.parse("10.01.2020"));
-        ksiazka5.getCzy_czytane().add(czytane5_1);
-            Przeczytane przeczytane5_1 = new Przeczytane(ksiazka5, formatter.parse("17.03.2020"),true);
-            ksiazka5.getCzy_przeczytane().add(przeczytane5_1);
-        Czytane czytane5_2 = new Czytane(ksiazka5, formatter.parse("20.02.2021"));
-        ksiazka5.getCzy_czytane().add(czytane5_2);
-            Przeczytane przeczytane5_2 = new Przeczytane(ksiazka5, formatter.parse("07.04.2021"));
-            ksiazka5.getCzy_przeczytane().add(przeczytane5_2);
-        library.getLibrary().put(il++,ksiazka5);
+        Book book4 = new Book("Bracia Karamazow", "Fiodor Dostojewski", "Powieść");
+        library.addBook(book4);
+        Reading reading4 = new Reading(library.getSize()-1, formatter.parse("30.07.2021"));
+        library.addReadingList(reading4);
+            library.addReadList(reading4, formatter.parse("19.09.2021"),false);
+        library.addOpinionsList(book4.getTitle() + ", " + book4.getAuthor());
 
-        Ksiazki ksiazka6 = new Ksiazki();
-        ksiazka6.setTytul("Sen śmiesznego człowieka");
-        ksiazka6.setAutor("Fiodor Dostojewski");
-        ksiazka6.setGatunek("Opowiadanie");
-        Czytane czytane6_1 = new Czytane(ksiazka6, formatter.parse("03.08.2019"));
-        ksiazka6.getCzy_czytane().add(czytane6_1);
-            Przeczytane przeczytane6_1 = new Przeczytane(ksiazka6, formatter.parse("04.08.2019"),true);
-            ksiazka6.getCzy_przeczytane().add(przeczytane6_1);
-        Czytane czytane6_2 = new Czytane(ksiazka6, formatter.parse("18.04.2020"));
-        ksiazka6.getCzy_czytane().add(czytane6_2);
-            Przeczytane przeczytane6_2 = new Przeczytane(ksiazka6, formatter.parse("20.04.2020"));
-            ksiazka6.getCzy_przeczytane().add(przeczytane6_2);
-        Czytane czytane6_3 = new Czytane(ksiazka6, formatter.parse("17.07.2021"));
-        ksiazka6.getCzy_czytane().add(czytane6_3);
-            Przeczytane przeczytane6_3 = new Przeczytane(ksiazka6, formatter.parse("17.07.2021"));
-            ksiazka6.getCzy_przeczytane().add(przeczytane6_3);
-        library.getLibrary().put(il++,ksiazka6);
 
-        Ksiazki ksiazka7 = new Ksiazki();
-        ksiazka7.setTytul("Biale noce");
-        ksiazka7.setAutor("Fiodor Dostojewski");
-        ksiazka7.setGatunek("Opowiadanie");
-        Czytane czytane7_1 = new Czytane(ksiazka7, formatter.parse("12.05.2020"));
-        ksiazka7.getCzy_czytane().add(czytane7_1);
-            Przeczytane przeczytane7_1 = new Przeczytane(ksiazka7, formatter.parse("15.05.2020"),true);
-            ksiazka7.getCzy_przeczytane().add(przeczytane7_1);
-        Czytane czytane7_2 = new Czytane(ksiazka7, formatter.parse("08.04.2022"));
-        ksiazka7.getCzy_czytane().add(czytane7_2);
-            Przeczytane przeczytane7_2 = new Przeczytane(ksiazka7, formatter.parse("10.04.2022"));
-            ksiazka7.getCzy_przeczytane().add(przeczytane7_2);
-        library.getLibrary().put(il++,ksiazka7);
+        Book book5 = new Book("Zbrodnia i kara", "Fiodor Dostojewski", "Powieść");
+        library.addBook(book5);
+        Reading reading5_1 = new Reading(library.getSize()-1, formatter.parse("10.01.2020"));
+        library.addReadingList(reading5_1);
+            library.addReadList(reading5_1, formatter.parse("17.03.2020"),true);
+        Reading reading5_2 = new Reading(library.getSize()-1, formatter.parse("20.02.2021"));
+        library.addReadingList(reading5_2);
+            library.addReadList(reading5_2, formatter.parse("07.04.2021"));
 
-        Ksiazki ksiazka8 = new Ksiazki();
-        ksiazka8.setTytul("O sztuce milosci");
-        ksiazka8.setAutor("Erich Fromm");
-        ksiazka8.setGatunek("Psychoanaliza");
-        Czytane czytane8 = new Czytane(ksiazka8, formatter.parse("02.03.2021"));
-        ksiazka8.getCzy_czytane().add(czytane8);
-            Przeczytane przeczytane8 = new Przeczytane(ksiazka8, formatter.parse("19.03.2021"), true);
-            ksiazka8.getCzy_przeczytane().add(przeczytane8);
-        library.getLibrary().put(il++,ksiazka8);
+        Book book6 = new Book("Sen śmiesznego człowieka", "Fiodor Dostojewski", "Opowiadanie");
+        library.addBook(book6);
+        Reading reading6_1 = new Reading(library.getSize()-1, formatter.parse("03.08.2019"));
+        library.addReadingList(reading6_1);
+            library.addReadList(reading6_1, formatter.parse("04.08.2019"),true);
+        Reading reading6_2 = new Reading(library.getSize()-1, formatter.parse("18.04.2020"));
+        library.addReadingList(reading6_2);
+            library.addReadList(reading6_2, formatter.parse("20.04.2020"));
+        Reading reading6_3 = new Reading(library.getSize()-1, formatter.parse("17.07.2021"));
+        library.addReadingList(reading6_3);
+            library.addReadList(reading6_3, formatter.parse("17.07.2021"));
+        library.addOpinionsList(book6.getTitle() + ", " + book6.getAuthor());
 
-        Ksiazki ksiazka9 = new Ksiazki();
-        ksiazka9.setTytul("Zbior wierszow");
-        ksiazka9.setAutor("Arsienij Tarkowski");
-        ksiazka9.setGatunek("Liryka");
-        Czytane czytane9 = new Czytane(ksiazka9, formatter.parse("27.09.2021"));
-        ksiazka9.getCzy_czytane().add(czytane9);
-            Przeczytane przeczytane9 = new Przeczytane(ksiazka9, formatter.parse("11.11.2021"), false);
-            ksiazka9.getCzy_przeczytane().add(przeczytane9);
-        library.getLibrary().put(il++,ksiazka9);
+        Book book7 = new Book("Biale noce", "Fiodor Dostojewski", "Opowiadanie");
+        library.addBook(book7);
+        Reading reading7_1 = new Reading(library.getSize()-1, formatter.parse("12.05.2020"));
+        library.addReadingList(reading7_1);
+            library.addReadList(reading7_1, formatter.parse("15.05.2020"),true);
+        Reading reading7_2 = new Reading(library.getSize()-1, formatter.parse("08.04.2022"));
+        library.addReadingList(reading7_2);
+            library.addReadList(reading7_2, formatter.parse("10.04.2022"));
 
-        Ksiazki ksiazka10 = new Ksiazki();
-        ksiazka10.setTytul("Rok 1984");
-        ksiazka10.setAutor("George Orwell");
-        ksiazka10.setGatunek("Fikcja polityczna");
-        Czytane czytane10 = new Czytane(ksiazka10, formatter.parse("12.01.2022"));
-        ksiazka10.getCzy_czytane().add(czytane10);
-            Przeczytane przeczytane10 = new Przeczytane(ksiazka10, formatter.parse("27.02.2022"), false);
-            ksiazka10.getCzy_przeczytane().add(przeczytane10);
-        library.getLibrary().put(il++,ksiazka10);
+        Book book8 = new Book("O sztuce milosci", "Erich Fromm", "Psychoanaliza");
+        library.addBook(book8);
+        Reading reading8 = new Reading(library.getSize()-1, formatter.parse("02.03.2021"));
+        library.addReadingList(reading8);
+            library.addReadList(reading8, formatter.parse("19.03.2021"), true);
 
-        Ksiazki ksiazka11 = new Ksiazki();
-        ksiazka11.setTytul("Folwark zwierzecy");
-        ksiazka11.setAutor("George Orwell");
-        ksiazka11.setGatunek("Fikcja polityczna");
-        Czytane czytane11 = new Czytane(ksiazka11, formatter.parse("28.02.2022"));
-        ksiazka11.getCzy_czytane().add(czytane11);
-            Przeczytane przeczytane11 = new Przeczytane(ksiazka11, formatter.parse("13.03.2022"), false);
-            ksiazka11.getCzy_przeczytane().add(przeczytane11);
-        library.getLibrary().put(il++,ksiazka11);
+        Book book9 = new Book("Zbior wierszow", "Arsienij Tarkowski", "Liryka");
+        library.addBook(book9);
+        Reading reading9 = new Reading(library.getSize()-1, formatter.parse("27.09.2021"));
+        library.addReadingList(reading9);
+            library.addReadList(reading9, formatter.parse("11.11.2021"), false);
 
-        Ksiazki ksiazka12 = new Ksiazki();
-        ksiazka12.setTytul("Morfina");
-        ksiazka12.setAutor("Michail Bulhakow");
-        ksiazka12.setGatunek("Opowiadanie");
-        Czytane czytane12 = new Czytane(ksiazka12, formatter.parse("16.03.2022"));
-        ksiazka12.getCzy_czytane().add(czytane12);
-            Przeczytane przeczytane12 = new Przeczytane(ksiazka12, formatter.parse("16.03.2022"), true);
-            ksiazka12.getCzy_przeczytane().add(przeczytane12);
-        library.getLibrary().put(il++,ksiazka12);
+        Book book10 = new Book("Rok 1984", "George Orwell", "Fikcja polityczna");
+        library.addBook(book10);
+        Reading reading10 = new Reading(library.getSize()-1, formatter.parse("12.01.2022"));
+        library.addReadingList(reading10);
+            library.addReadList(reading10, formatter.parse("27.02.2022"), false);
 
-        Ksiazki ksiazka13 = new Ksiazki();
-        ksiazka13.setTytul("Notatki lekarza");
-        ksiazka13.setAutor("Michail Bulhakow");
-        ksiazka13.setGatunek("Komediodramat");
-        Czytane czytane13 = new Czytane(ksiazka13, formatter.parse("20.03.2022"));
-        ksiazka13.getCzy_czytane().add(czytane13);
-            Przeczytane przeczytane13 = new Przeczytane(ksiazka13, formatter.parse("25.03.2022"), true);
-            ksiazka13.getCzy_przeczytane().add(przeczytane13);
-        library.getLibrary().put(il++,ksiazka13);
 
-        Ksiazki ksiazka14 = new Ksiazki();
-        ksiazka14.setTytul("Zapiski na mankietach");
-        ksiazka14.setAutor("Michail Bulhakow");
-        ksiazka14.setGatunek("Komediodramat");
-        Czytane czytane14 = new Czytane(ksiazka14, formatter.parse("29.03.2022"));
-        ksiazka14.getCzy_czytane().add(czytane14);
-            Przeczytane przeczytane14 = new Przeczytane(ksiazka14, formatter.parse("05.04.2022"), false);
-            ksiazka14.getCzy_przeczytane().add(przeczytane14);
-        library.getLibrary().put(il++,ksiazka14);
+        Book book11 = new Book("Folwark zwierzecy", "George Orwell", "Fikcja polityczna");
+        library.addBook(book11);
+        Reading reading11 = new Reading(library.getSize()-1, formatter.parse("28.02.2022"));
+        library.addReadingList(reading11);
+            library.addReadList(reading11, formatter.parse("13.03.2022"), false);
 
-        Ksiazki ksiazka15 = new Ksiazki();
-        ksiazka15.setTytul("Nocny lot");
-        ksiazka15.setAutor("Iosif Brodski");
-        ksiazka15.setGatunek("Nowela");
-        Czytane czytane15 = new Czytane(ksiazka15, formatter.parse("24.04.2022"));
-        ksiazka15.getCzy_czytane().add(czytane15);
-        library.getLibrary().put(il++,ksiazka15);
 
+        Book book12 = new Book("Morfina", "Michail Bulhakow", "Opowiadanie");
+        library.addBook(book12);
+        Reading reading12 = new Reading(library.getSize()-1, formatter.parse("16.03.2022"));
+        library.addReadingList(reading12);
+            library.addReadList(reading12, formatter.parse("16.03.2022"), true);
+
+
+        Book book13 = new Book("Notatki lekarza", "Michail Bulhakow", "Komediodramat");
+        library.addBook(book13);
+        Reading reading13 = new Reading(library.getSize()-1, formatter.parse("20.03.2022"));
+        library.addReadingList(reading13);
+            library.addReadList(reading13, formatter.parse("25.03.2022"), true);
+
+
+        Book book14 = new Book("Zapiski na mankietach", "Michail Bulhakow", "Komediodramat");
+        library.addBook(book14);
+        Reading reading14 = new Reading(library.getSize()-1, formatter.parse("29.03.2022"));
+        library.addReadingList(reading14);
+            library.addReadList(reading14, formatter.parse("05.04.2022"), false);
+
+
+        Book book15 = new Book("Nocny lot", "Iosif Brodski", "Nowela");
+        library.addBook(book15);
+        Reading reading15 = new Reading(library.getSize()-1, formatter.parse("24.04.2022"));
+        library.addReadingList(reading15);
 
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
