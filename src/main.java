@@ -1,6 +1,7 @@
 import java.io.*;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.channels.NotYetBoundException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.FileInputStream;
@@ -225,51 +226,29 @@ public class main {
             System.out.println("""
                     Available statistics:\s
                     \t1. How many books by the given author
-                    \t2. How many times have you read this particular book?""");
+                    \t2. How many times have you read this particular book""");
             int statisticsChoice = scanner.nextInt();
 
+            //How many books by the given author
             if(statisticsChoice==1){
-                for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()) {
-                    Ksiazki book = entry.getValue();
-                    System.out.println(book.getAutor());
-                    for(Map.Entry<Integer, Ksiazki> entry0:library.getLibrary().entrySet()){
-                        Ksiazki book0 = entry0.getValue();
-                        if(!book.getAutor().equals(book0.getAutor())){
-                            System.out.println(book0.getAutor());
-                            book=entry0.getValue();
-                        }
-                    }
-                    break;
-                    }
-                    System.out.print("Enter the name of one of the authors: ");
-                    String authorForStatistics;
-                    do {
-                        authorForStatistics = scanner.nextLine();
-                    }
-                    while (authorForStatistics.length() == 0);
-                    int booksCountByAuthor = 0;
-                    for (Map.Entry<Integer, Ksiazki> entry : library.getLibrary().entrySet()) {
-                        Ksiazki book = entry.getValue();
-                        if (book.getAutor().equals(authorForStatistics)) {
-                            System.out.println(booksCountByAuthor++ + ". " + book.getTytul());
-                        }
-                    }
-                    System.out.println("There are " + booksCountByAuthor + " book by " + authorForStatistics + " in the library");
+                System.out.println("Available authors:");
+                library.getAuthorsFromTheLibrary();
+                System.out.println("Enter the author: ");
+                String inputAuthor;
+                do{
+                    inputAuthor = scanner.nextLine();
+                }while (inputAuthor.isEmpty());
+                library.statisticsHowManyBooksByTheGivenAuthor(inputAuthor);
             }
+
+            //How many times have you read this particular book
             if(statisticsChoice==2){
-                for(Map.Entry<Integer, Ksiazki> entry:library.getLibrary().entrySet()){
-                    Ksiazki book = entry.getValue();
-                    System.out.println("\t" + entry.getKey() + ". " + book.getTytul() + " " + book.getAutor());
-                }
-                System.out.print("Enter the book id: ");
-                int id = scanner.nextInt();
-                int times=0;
-                Ksiazki book = library.getLibrary().get(id);
-                System.out.println(book.getTytul() + " byla przeczytana: ");
-                for(Przeczytane read: book.getCzy_przeczytane()){
-                    System.out.println("\t" + times++ + ". " + read.getEndDate());
-                }
-                System.out.println("You've read it " + times + " times");
+                library.printLibrary();
+                System.out.print("Enter the books id: ");
+                int inputId = scanner.nextInt();
+                if(inputId < library.getSize()){
+                    library.howManyTimesHaveYouReadThisParticularBook(inputId);
+                } else System.out.println("There is no book by the given id (" + inputId + ")");
             }
         }
 
@@ -277,15 +256,15 @@ public class main {
         if(command==14){
             System.out.println("Well, definitely on the toy.." +
                     "(there is a message which book you want to read now in meantime)");
-            int size=library.getLibrary().size();
+            int size=library.getSize()-1;
 
             for (int j = 1; j < 3; j++) {
                     int randomBook = (int) (Math.random() * size);
-                    Watek thread1 = new Watek(library.getLibrary().get(randomBook));
-                    thread1.start();
-                    randomBook=(int) (Math.random() * size);
-                    Watek thread2 = new Watek(library.getLibrary().get(randomBook % 3));
-                    thread2.start();
+                    MyThread thread = new MyThread(library.getLibrary().get(randomBook), library.getReadList());
+                    thread.start();
+//                    randomBook=(int) (Math.random() * size);
+//                    MyThread thread2 = new MyThread(library.getLibrary().get(randomBook % 3));
+//                    thread2.start();
 
                 }
 

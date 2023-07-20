@@ -6,7 +6,14 @@ public class Library implements Serializable {
     private List<Reading> readingList;
     private List<Read> readList;
     private List<Buy> buyList;
-    public Library(){}
+    private List<String> authorsList;
+    public Library(){
+        this.library = new ArrayList<>();
+        this.readingList = new ArrayList<>();
+        this.readList = new ArrayList<>();
+        this.buyList = new ArrayList<>();
+        this.authorsList = new ArrayList<>();
+    }
 
 
 
@@ -81,5 +88,35 @@ public class Library implements Serializable {
         return false;
     }
 
+    public void getAuthorsFromTheLibrary(){
+        for(Book book: library){
+            if(!authorsList.contains(book.author)){
+                System.out.println("\t" + book.getAuthor());
+                authorsList.add(book.author);
+            }
+        }
+    }
 
+    public void statisticsHowManyBooksByTheGivenAuthor(String author){
+        if(authorsList.contains(author)){
+            int i=1;
+            for(Book book: library){
+                if(book.author.equals(author)){
+                    System.out.println("\t(" + i + ") title: \"" + book.getTitle() + "\", genre: "  + book.getGenre());
+                }
+            }
+        } else System.out.println("Entered the wrong author (" + author + ")");
+    }
+
+    public void howManyTimesHaveYouReadThisParticularBook(int id){
+        int howManyTimes = 0;
+        for(Read readBook: readList){
+            if(readBook.booksId == id) {
+                howManyTimes++;
+                System.out.println("\t\t("+ howManyTimes + ") " + readBook.getStartDate() + " - " + readBook.getEndDate());
+            }
+        }
+        Book book = library.get(id);
+        System.out.println("\tYou've read \"" + book.getTitle() + "\" by " + book.getAuthor() + " " + howManyTimes + " times");
+    }
 }
