@@ -33,13 +33,13 @@ public class main {
                 6. add book to reading list
                 7. add book to read list
                 8. see the review of the given book
-                9. write an opinion about the given book
-                10. delete the opinion about the given book
+                9. write a review about the given book
+                10. delete the review about the given book
                 11. see the list \"books to buy\"
                 12. add a book to the list \"books to buy\"
                 13. display by certain categories
                 14. see available statistics
-                15. toy with cotton wool
+                15. a little toy with thread
                 16. exit the program""");
         System.out.println("******************************************************************************");
         System.out.print("your command (number): ");
@@ -82,7 +82,7 @@ public class main {
             System.out.print("Enter the id of the book you want to delete: ");
             int booksId = scanner.nextInt();
                 try {
-                    library.getLibrary().remove(booksId);
+                    library.removeBook(booksId);
                 }
                 catch(Exception e){
                     System.out.println("Error: " + e.getMessage());
