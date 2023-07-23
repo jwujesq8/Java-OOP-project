@@ -1,5 +1,4 @@
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 public class Library implements Serializable {
@@ -161,6 +160,56 @@ public class Library implements Serializable {
         }
     }
 
+    public void showTheBookReview(int number) throws IOException {
+        String titleAndAuthor = opinionsList.get(number);
+        Book bookForOpinion = findBookByTitleAndAuthor(titleAndAuthor);
+
+        File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
+        if(!readOpinionFile.exists()){
+            System.out.println("Sorry, there is no opinion about this book");
+        }
+        else if(!readOpinionFile.canRead()){
+            System.out.println("Sorry, but you have not access to read it..");
+        }
+        else{
+            BufferedReader tempBR = new BufferedReader(new FileReader(readOpinionFile));
+            String line;
+            while((line = tempBR.readLine()) != null){
+                System.out.println(line);
+            }
+            tempBR.close();
+        }
+
+    }
+
+    public void saveTheBookReview(int id) throws IOException {
+        Book bookForOpinion = library.get(id);
+
+        File writeOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
+        BufferedWriter tempWriter = new BufferedWriter(new FileWriter(writeOpinionFile));
+        String opinion;
+        do{
+            Scanner scanner = new Scanner(System.in);
+            opinion = scanner.nextLine();
+        } while (opinion.length()==0);
+        tempWriter.write(opinion);
+        tempWriter.close();
+        addOpinionsList(bookForOpinion.getTitle() + ", " + bookForOpinion.getAuthor());
+    }
+
+    public void deleteTheBookReview(int number){
+        String titleAndAuthor = opinionsList.get(number);
+        Book bookForDeletingOpinion = findBookByTitleAndAuthor(titleAndAuthor);
+
+        File deleteOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
+                bookForDeletingOpinion.getTitle() + "__" + bookForDeletingOpinion.getAuthor() + ".txt");
+        if(deleteOpinionFile.delete()) {
+            System.out.println(deleteOpinionFile.getName() + " -  deleted");
+        } else System.out.println("failed");
+    }
+
     public Book findBookByTitleAndAuthor(String titleAndAuthor){
         String[] parts = titleAndAuthor.split(", ");
         String title = parts[0];
@@ -213,5 +262,47 @@ public class Library implements Serializable {
         }
         Book book = library.get(id);
         System.out.println("\tYou've read \"" + book.getTitle() + "\" by " + book.getAuthor() + " " + howManyTimes + " times");
+    }
+
+    public void getAllInfoAboutTheParticularBook(int id) throws IOException {
+        Book book = library.get(id);
+        System.out.println("\t\t\tid: " + id +
+                           "\n\t\t\ttitle: " + book.getTitle() +
+                           "\n\t\t\tauthor: " + book.getAuthor() +
+                           "\n\t\t\tgenre: " + book.getGenre());
+
+        System.out.print("\t\t\treading now: ");
+        boolean isItReading = false;
+        for(Reading reading:readingList)
+            if (reading.getBooksId() == id) {
+                isItReading = true;
+                System.out.print("\n\t\t\t\tstart: " + reading.getStartDate());
+                break;
+            }
+        System.out.print(isItReading? "": "no");
+
+        System.out.print("\n\t\t\tread periods: ");
+        boolean isItRead = false;
+        int iterationForReadPeriods = 0;
+        for(Read read:readList){
+            if(read.getBooksId()==id){
+                if(!isItRead) isItRead = true;
+                iterationForReadPeriods++;
+                System.out.print("\n\t\t\t\t(" + iterationForReadPeriods + ") start: " + read.getStartDate() + ", end: " + read.getEndDate());
+            }
+        }
+        System.out.print(isItRead? "": "no periods");
+
+        System.out.print("\n\t\t\treview: ");
+        boolean hasReview = false;
+        String fileName = book.getTitle() + ", " + book.getAuthor();
+        for(int i=0;i<opinionsList.size();i++){
+            if(opinionsList.get(i).equals(fileName)){
+                hasReview = true;
+                showTheBookReview(i);
+            }
+        }
+        System.out.print(hasReview? "": "no review");
+
     }
 }

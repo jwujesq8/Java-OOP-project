@@ -141,25 +141,7 @@ public class main {
             library.printOpinionsList();
             System.out.print("Enter the number of the book which review you want to read: ");
             int number =scanner.nextInt();
-            String titleAndAuthor = library.getOpinionsList().get(number);
-            Book bookForOpinion = library.findBookByTitleAndAuthor(titleAndAuthor);
-
-            File readOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
-                    bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
-            if(!readOpinionFile.exists()){
-                System.out.println("Sorry, there is no opinion about this book");
-            }
-            else if(!readOpinionFile.canRead()){
-                System.out.println("Sorry, but you have not access to read it..");
-            }
-            else{
-                BufferedReader tempBR = new BufferedReader(new FileReader(readOpinionFile));
-                String line;
-                while((line = tempBR.readLine()) != null){
-                    System.out.println(line);
-                }
-                tempBR.close();
-            }
+            library.showTheBookReview(number);
         }
 
         //write an opinion about the given book
@@ -167,18 +149,7 @@ public class main {
             library.printLibrary();
             System.out.print("Enter the id of the book, which review you want to (re)write: ");
             int inputId = scanner.nextInt();
-            Book bookForOpinion = library.getLibrary().get(inputId);
-
-            File writeOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
-                    bookForOpinion.getTitle() + "__" + bookForOpinion.getAuthor() + ".txt");
-            BufferedWriter tempWriter = new BufferedWriter(new FileWriter(writeOpinionFile));
-            String opinion;
-            do{
-                opinion = scanner.nextLine();
-            } while (opinion.length()==0);
-            tempWriter.write(opinion);
-            tempWriter.close();
-            library.addOpinionsList(bookForOpinion.getTitle() + ", " + bookForOpinion.getAuthor());
+            library.saveTheBookReview(inputId);
         }
 
         //delete the opinion about the given book
@@ -186,14 +157,7 @@ public class main {
             library.printOpinionsList();
             System.out.print("Enter the id of the book, which review you want to delete: ");
             int number = scanner.nextInt();
-            String titleAndAuthor = library.getOpinionsList().get(number);
-            Book bookForDeletingOpinion = library.findBookByTitleAndAuthor(titleAndAuthor);
-
-            File deleteOpinionFile = new File("C:\\Users\\zhuko\\IdeaProjects\\projekt\\reviews\\" +
-                    bookForDeletingOpinion.getTitle() + "__" + bookForDeletingOpinion.getAuthor() + ".txt");
-            if(deleteOpinionFile.delete()) {
-                System.out.println(deleteOpinionFile.getName() + " -  deleted");
-            } else System.out.println("failed");
+            library.deleteTheBookReview(number);
         }
 
         //see the list "books to buy"
@@ -239,7 +203,7 @@ public class main {
         if(command==14){
             System.out.println("Available displays by category: " +
                     "\n\t1. favorite books"
-//                    + "\n\t2. wyswietlic wszystkie informacje o ksiazkach w biblioteczce"
+                    + "\n\t2. display all info about the particular book"
                    );
             System.out.print("\tChoose the category: ");
             int categoryChoice= scanner.nextInt();
@@ -250,6 +214,15 @@ public class main {
                         Book book = library.getLibrary().get(readBook.booksId);
                         System.out.println("\t " + book.getTitle() + ", " + book.getAuthor());
                     }
+                }
+            }
+
+            if (categoryChoice==2){
+                library.printLibrary();
+                System.out.print("Enter the books id which one would you choose: ");
+                int inputId = scanner.nextInt();
+                if(inputId< library.getSize()){
+                    library.getAllInfoAboutTheParticularBook(inputId);
                 }
             }
         }
