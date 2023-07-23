@@ -15,8 +15,8 @@ public class Reading implements Serializable {
     public int getBooksId() {
         return booksId;
     }
-    public void changeBooksId(Reading readingBook, int newId){
-        readingBook.booksId = newId;
+    public void changeBooksId(int newId){
+        this.booksId = newId;
     }
 
     public Reading(int id, Date startDate){
