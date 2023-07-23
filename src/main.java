@@ -37,10 +37,11 @@ public class main {
                 10. delete the review about the given book
                 11. see the list \"books to buy\"
                 12. add a book to the list \"books to buy\"
-                13. display by certain categories
-                14. see available statistics
-                15. a little toy with thread
-                16. exit the program""");
+                13. remove the book from the list \"books to buy\"
+                14. display by certain categories
+                15. see available statistics
+                16. a little toy with thread
+                17. exit the program""");
         System.out.println("******************************************************************************");
         System.out.print("your command (number): ");
         int command = scanner.nextInt();
@@ -213,7 +214,7 @@ public class main {
             do{title = scanner.nextLine();}
                 while(title.length()==0);
 
-            System.out.print("Enter the author of the  \"" + title + "\": ");
+            System.out.print("Enter the author of the \"" + title + "\": ");
             String author = scanner.nextLine();
 
             System.out.print("What's a genre of the \"" + title + "\"?: ");
@@ -225,8 +226,17 @@ public class main {
             library.addBuyList(new Buy(new Book(title, author, genre), cover));
         }
 
-        //display by certain categories
+        //13. remove the book from the list "books to buy"
         if(command==13){
+            library.printBuyList();
+            System.out.print("Enter the id of the book you want to remove: ");
+            int inputId = scanner.nextInt();
+            if(inputId<library.getBuyList().size()) library.getBuyList().remove(inputId);
+            else System.out.println("There is no book with this id (" + inputId + ") in the buyList..");
+        }
+
+        //display by certain categories
+        if(command==14){
             System.out.println("Available displays by category: " +
                     "\n\t1. favorite books"
 //                    + "\n\t2. wyswietlic wszystkie informacje o ksiazkach w biblioteczce"
@@ -245,7 +255,7 @@ public class main {
         }
 
         //see available statistics
-        if(command==14){
+        if(command==15){
             System.out.println("""
                     Available statistics:\s
                     \t1. How many books by the given author
@@ -277,7 +287,7 @@ public class main {
         }
 
         //toy with cotton wool
-        if(command==15){
+        if(command==16){
             System.out.println("Well, definitely on the toy.." +
                     "(there is a message which book you want to read now in meantime)");
             int size=library.getSize()-1;
@@ -295,7 +305,7 @@ public class main {
         }
 
         //exit the program
-        if(command==16){
+        if(command==17){
             System.exit(0);
         }
     }
