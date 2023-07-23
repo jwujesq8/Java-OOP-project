@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -8,6 +9,7 @@ public class Library implements Serializable {
     private List<Buy> buyList;
     private List<String> authorsList;
     private List<String> opinionsList;
+    public List<Book> removedBooksFromLibrary;
     public Library(){
         this.library = new ArrayList<>();
         this.readingList = new ArrayList<>();
@@ -15,8 +17,16 @@ public class Library implements Serializable {
         this.buyList = new ArrayList<>();
         this.authorsList = new ArrayList<>();
         this.opinionsList = new ArrayList<>();
+        this.removedBooksFromLibrary = new ArrayList<>();
     }
 
+    public void updateAllBooksIdAfterRemovingTheBook(int startId){
+        for(int i=startId; i< library.size();i++){
+            int pastBooksId = i+1;
+            for(Reading reading:readingList) if(reading.getBooksId()==pastBooksId) reading.changeBooksId(i);
+            for(Read read: readList) if(read.getBooksId()==pastBooksId) read.changeBooksId(i);
+        }
+    }
 
 
 
@@ -33,6 +43,38 @@ public class Library implements Serializable {
 
     public void addBook(Book newBook){
         library.add(newBook);
+    }
+    public void removeBook(int id){
+        if(id< library.size()){
+            Book removedBook = library.get(id);
+            removedBooksFromLibrary.add(removedBook);
+            int removedBooksId = removedBooksFromLibrary.size()-1;
+            int newId = Integer.parseInt("88" + removedBooksId);
+            //System.out.println("removed id = " + newId);
+
+            for(Reading reading: readingList){
+                if(reading.getBooksId() == id){
+                    reading.changeBooksId(newId);
+                }
+            }
+            for(Read read: readList){
+                if(read.getBooksId() == id){
+                    read.changeBooksId(newId);
+                }
+            }
+            library.remove(id);
+            updateAllBooksIdAfterRemovingTheBook(id);
+        } else System.out.println("There is no book with this id (" + id + ")");
+    }
+    public boolean checkIfTheBookIsRemoved(int booksId){
+        String idString = "" + booksId;
+        try {
+            String twoFirstChars = "" + idString.charAt(0) + idString.charAt(1);
+            return twoFirstChars.equals("88");
+        } catch (Exception e) {
+            return false;
+        }
+
     }
     public void addReadingList(Reading newReading){
         readingList.add(newReading);
@@ -66,11 +108,17 @@ public class Library implements Serializable {
         if(!readingList.isEmpty()){
             int i = 0;
             for(Reading reading:readingList){
-                if(reading.getBooksId()<library.size()){
-                    Book readingBook = library.get(reading.getBooksId());
-                    System.out.println("\t(" + i + ") " + readingBook.getTitle() + ", " + readingBook.getAuthor() + " (" + readingBook.getGenre() + ")" +
+                if(checkIfTheBookIsRemoved(reading.getBooksId())){
+                    int removedId = Integer.parseInt(Integer.toString(reading.getBooksId()).substring(2));
+                    Book removedBook = removedBooksFromLibrary.get(removedId);
+                    System.out.println("\t(removed book: 88" + removedId  + ") "+ removedBook.getTitle() + ", " + removedBook.getAuthor() + " (" + removedBook.getGenre() + ")" +
                             "\n\t\t\tstart: " + reading.getStartDate());
-                    i++;
+                } else if(reading.getBooksId()<library.size()){
+                        Book readingBook = library.get(reading.getBooksId());
+                        System.out.println("\t(" + i + ") " + readingBook.getTitle() + ", " + readingBook.getAuthor() + " (" + readingBook.getGenre() + ")" +
+                                "\n\t\t\tstart: " + reading.getStartDate());
+                        i++;
+
                 } else System.out.println("\t(-) deleted book from the library" +
                         "\n\t\t\tstart: " + reading.getStartDate());
             }
@@ -79,7 +127,12 @@ public class Library implements Serializable {
     public void printReadList(){
         int i = 0;
         for(Read read:readList){
-            if(read.getBooksId()<library.size()){
+            if(checkIfTheBookIsRemoved(read.getBooksId())){
+                int removedId = Integer.parseInt(Integer.toString(read.getBooksId()).substring(2));
+                Book removedBook = removedBooksFromLibrary.get(removedId);
+                System.out.println("\t(removed book: 88" + removedId  + ") " + removedBook.getTitle() + ", " + removedBook.getAuthor() + " (" + removedBook.getGenre() + ")" +
+                        "\n\t\t\tstart: " + read.getStartDate());
+            } else if(read.getBooksId()<library.size()){
                 Book readBook = library.get(read.getBooksId());
                 System.out.println("\t(" + i + ") " + readBook.getTitle() + ", " + readBook.getAuthor() +
                         "\n\t\t\tstart: " + read.getStartDate() + ", end: " + read.getEndDate());

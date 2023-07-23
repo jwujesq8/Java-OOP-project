@@ -49,4 +49,7 @@ public class Read implements Serializable {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+    public void changeBooksId(int newId){
+        this.booksId = newId;
+    }
 }
