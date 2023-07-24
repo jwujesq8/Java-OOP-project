@@ -7,6 +7,7 @@ import java.util.*;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 public class main {
+
     public static void main (String[] args) throws Exception{
         MyFileWriter booksFileWriter = new MyFileWriter("C:\\Users\\zhuko\\IdeaProjects\\projekt\\library.bin");
         booksFileWriter.setContent();
@@ -263,18 +264,8 @@ public class main {
         if(command==16){
             System.out.println("Well, definitely on the toy.." +
                     "(there is a message which book you want to read now in meantime)");
-            int size=library.getSize()-1;
-
-            for (int j = 1; j < 3; j++) {
-                    int randomBook = (int) (Math.random() * size);
-                    MyThread thread = new MyThread(library.getLibrary().get(randomBook), library.getReadList());
-                    thread.start();
-//                    randomBook=(int) (Math.random() * size);
-//                    MyThread thread2 = new MyThread(library.getLibrary().get(randomBook % 3));
-//                    thread2.start();
-
-                }
-
+            MyThread thread = new MyThread(library);
+            thread.start();
         }
 
         //exit the program
