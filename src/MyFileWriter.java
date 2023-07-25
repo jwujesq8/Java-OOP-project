@@ -23,16 +23,16 @@ public class MyFileWriter{
         Library library = new Library();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
-        Book book1 = new Book("Biesy", "Fiodor Dostojewski", "Powieść");
+        Book book1 = new Book("Demons", "Fyodor Dostoevsky", "novel");
         library.addBook(book1);
         Reading reading1 = new Reading(library.getSize()-1, formatter.parse("02.04.2021"));
         library.addReadingList(reading1);
         library.addReadList(reading1, formatter.parse("27.06.2021"),true);
 
-        Book book2 = new Book("Idiota", "Fiodor Dostojewski","Powieść");
+        Book book2 = new Book("Idiot", "FFyodor Dostoevsky","novel");
         library.addBook(book2);
 
-        Book book3 = new Book("Gracz", "Fiodor Dostojewski","Powieść");
+        Book book3 = new Book("Player", "Fyodor Dostoevsky","novel");
         library.addBook(book3);
         Reading reading3 = new Reading(library.getSize()-1, formatter.parse("15.04.2022"));
         library.addReadingList(reading3);
@@ -40,7 +40,7 @@ public class MyFileWriter{
         library.addOpinionsList(book3.getTitle() + ", " + book3.getAuthor());
 
 
-        Book book4 = new Book("Bracia Karamazow", "Fiodor Dostojewski", "Powieść");
+        Book book4 = new Book("Brothers Karamazov", "Fyodor Dostoevsky", "novel");
         library.addBook(book4);
         Reading reading4 = new Reading(library.getSize()-1, formatter.parse("30.07.2021"));
         library.addReadingList(reading4);
@@ -48,7 +48,7 @@ public class MyFileWriter{
         library.addOpinionsList(book4.getTitle() + ", " + book4.getAuthor());
 
 
-        Book book5 = new Book("Zbrodnia i kara", "Fiodor Dostojewski", "Powieść");
+        Book book5 = new Book("Crime and Punishment", "Fyodor Dostoevsky", "novel");
         library.addBook(book5);
         Reading reading5_1 = new Reading(library.getSize()-1, formatter.parse("10.01.2020"));
         library.addReadingList(reading5_1);
@@ -57,7 +57,7 @@ public class MyFileWriter{
         library.addReadingList(reading5_2);
         library.addReadList(reading5_2, formatter.parse("07.04.2021"));
 
-        Book book6 = new Book("Sen śmiesznego człowieka", "Fiodor Dostojewski", "Opowiadanie");
+        Book book6 = new Book("Dream of a funny man", "Fyodor Dostoevsky", "story");
         library.addBook(book6);
         Reading reading6_1 = new Reading(library.getSize()-1, formatter.parse("03.08.2019"));
         library.addReadingList(reading6_1);
@@ -70,7 +70,7 @@ public class MyFileWriter{
         library.addReadList(reading6_3, formatter.parse("17.07.2021"));
         library.addOpinionsList(book6.getTitle() + ", " + book6.getAuthor());
 
-        Book book7 = new Book("Biale noce", "Fiodor Dostojewski", "Opowiadanie");
+        Book book7 = new Book("White Nights", "Fyodor Dostoevsky", "story");
         library.addBook(book7);
         Reading reading7_1 = new Reading(library.getSize()-1, formatter.parse("12.05.2020"));
         library.addReadingList(reading7_1);
@@ -79,54 +79,54 @@ public class MyFileWriter{
         library.addReadingList(reading7_2);
         library.addReadList(reading7_2, formatter.parse("10.04.2022"));
 
-        Book book8 = new Book("O sztuce milosci", "Erich Fromm", "Psychoanaliza");
+        Book book8 = new Book("The Art of Loving", "Erich Fromm", "psychoanalysis");
         library.addBook(book8);
         Reading reading8 = new Reading(library.getSize()-1, formatter.parse("02.03.2021"));
         library.addReadingList(reading8);
         library.addReadList(reading8, formatter.parse("19.03.2021"), true);
 
-        Book book9 = new Book("Zbior wierszow", "Arsienij Tarkowski", "Liryka");
+        Book book9 = new Book("collection of poems", "Arseny Tarkovsky", "lyrics");
         library.addBook(book9);
         Reading reading9 = new Reading(library.getSize()-1, formatter.parse("27.09.2021"));
         library.addReadingList(reading9);
         library.addReadList(reading9, formatter.parse("11.11.2021"), false);
 
-        Book book10 = new Book("Rok 1984", "George Orwell", "Fikcja polityczna");
+        Book book10 = new Book("1984", "George Orwell", "Political fiction");
         library.addBook(book10);
         Reading reading10 = new Reading(library.getSize()-1, formatter.parse("12.01.2022"));
         library.addReadingList(reading10);
         library.addReadList(reading10, formatter.parse("27.02.2022"), false);
 
 
-        Book book11 = new Book("Folwark zwierzecy", "George Orwell", "Fikcja polityczna");
+        Book book11 = new Book("Barnyard", "George Orwell", "Political fiction");
         library.addBook(book11);
         Reading reading11 = new Reading(library.getSize()-1, formatter.parse("28.02.2022"));
         library.addReadingList(reading11);
         library.addReadList(reading11, formatter.parse("13.03.2022"), false);
 
 
-        Book book12 = new Book("Morfina", "Michail Bulhakow", "Opowiadanie");
+        Book book12 = new Book("Morphine", "Mikhail Bulgakov", "story");
         library.addBook(book12);
         Reading reading12 = new Reading(library.getSize()-1, formatter.parse("16.03.2022"));
         library.addReadingList(reading12);
         library.addReadList(reading12, formatter.parse("16.03.2022"), true);
 
 
-        Book book13 = new Book("Notatki lekarza", "Michail Bulhakow", "Komediodramat");
+        Book book13 = new Book("Doctor's Notes", "Mikhail Bulgakov", "comedy drama");
         library.addBook(book13);
         Reading reading13 = new Reading(library.getSize()-1, formatter.parse("20.03.2022"));
         library.addReadingList(reading13);
         library.addReadList(reading13, formatter.parse("25.03.2022"), true);
 
 
-        Book book14 = new Book("Zapiski na mankietach", "Michail Bulhakow", "Komediodramat");
+        Book book14 = new Book("Notes on cuffs", "Mikhail Bulgakov", "comedy drama");
         library.addBook(book14);
         Reading reading14 = new Reading(library.getSize()-1, formatter.parse("29.03.2022"));
         library.addReadingList(reading14);
         library.addReadList(reading14, formatter.parse("05.04.2022"), false);
 
 
-        Book book15 = new Book("Nocny lot", "Iosif Brodski", "Nowela");
+        Book book15 = new Book("Night flight", "Joseph Brodsky", "novel");
         library.addBook(book15);
         Reading reading15 = new Reading(library.getSize()-1, formatter.parse("24.04.2022"));
         library.addReadingList(reading15);
@@ -148,7 +148,7 @@ public class MyFileWriter{
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(library);
         Date timeNow = new Date();
-        System.out.println("timeNow: " + timeNow);
+        //System.out.println("timeNow: " + timeNow);
 
         objectOutputStream.flush();
         objectOutputStream.close();
@@ -157,7 +157,7 @@ public class MyFileWriter{
         File file = new File(filePath);
         long lastModified = file.lastModified();
         Date date = new Date(lastModified);
-        System.out.println("lastModified: " + date);
+        //System.out.println("lastModified: " + date);
 
         return date.compareTo(timeNow) == 0;
     }
