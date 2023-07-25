@@ -99,7 +99,11 @@ public class main {
                         boolean isItDeleted = myLibraryWriter.removeMyLibrary();
                         if(isItDeleted) {
                             System.out.println("Your library is empty now");
-                            library = myLibraryReader.getContent();
+                            try{
+                                library = myLibraryReader.getContent();
+                            } catch (Exception e){
+                                System.out.println(e.getMessage());
+                            }
                         }
                         else System.out.println("Error with deleting the library. Try again");
                     }
@@ -147,7 +151,8 @@ public class main {
                         library.removeBook(booksId);
                     }
                     catch(Exception e){
-                        System.out.println("Error: " + e.getMessage());
+                        System.out.println(e.getMessage());
+                        System.out.println("Most likely there is no book with the given id("+booksId+")");
                     }
             }
 
@@ -194,7 +199,11 @@ public class main {
                     if(isItFavorite.equals("yes")) like = true;
                 } while(isItFavorite.length()==0);
 
-                library.addReadList(library.getReadingList().get(inputId), dateEnd, like);
+                try{
+                    library.addReadList(library.getReadingList().get(inputId), dateEnd, like);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             //see the review of the given book
@@ -202,7 +211,11 @@ public class main {
                 library.printOpinionsList();
                 System.out.print("Enter the number of the book which review you want to read: ");
                 int number =scanner.nextInt();
-                library.showTheBookReview(number);
+                try{
+                    library.showTheBookReview(number);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             //write an opinion about the given book
@@ -218,7 +231,11 @@ public class main {
                 library.printOpinionsList();
                 System.out.print("Enter the id of the book, which review you want to delete: ");
                 int number = scanner.nextInt();
-                library.deleteTheBookReview(number);
+                try{
+                    library.deleteTheBookReview(number);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             //see the list "books to buy"
@@ -248,7 +265,11 @@ public class main {
                 System.out.print("What books cover would you prefer: (hard/soft) ");
                 String cover = scanner.nextLine();
 
-                library.addBuyList(new Buy(new Book(title, author, genre), cover));
+                try{
+                    library.addBuyList(new Buy(new Book(title, author, genre), cover));
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
 
             //13. remove the book from the list "books to buy"
@@ -282,8 +303,10 @@ public class main {
                     library.printLibrary();
                     System.out.print("Enter the books id which one would you choose: ");
                     int inputId = scanner.nextInt();
-                    if(inputId< library.getSize()){
+                    try{
                         library.getAllInfoAboutTheParticularBook(inputId);
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
                     }
                 }
             }
@@ -306,7 +329,11 @@ public class main {
                     do{
                         inputAuthor = scanner.nextLine();
                     }while (inputAuthor.isEmpty());
-                    library.statisticsHowManyBooksByTheGivenAuthor(inputAuthor);
+                    try{
+                        library.statisticsHowManyBooksByTheGivenAuthor(inputAuthor);
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                 }
 
                 //How many times have you read this particular book
@@ -314,9 +341,12 @@ public class main {
                     library.printLibrary();
                     System.out.print("Enter the books id: ");
                     int inputId = scanner.nextInt();
-                    if(inputId < library.getSize()){
+                    try{
                         library.howManyTimesHaveYouReadThisParticularBook(inputId);
-                    } else System.out.println("There is no book by the given id (" + inputId + ")");
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                        System.out.println("Most likely there is no book with the given id (" + inputId + ")");
+                    }
                 }
             }
 
@@ -332,7 +362,11 @@ public class main {
             if(command==17){
                 MyFileWriter myLibraryWriter = new MyFileWriter();
                 myLibraryWriter.saveMyLibrary(library);
-                System.exit(0);
+                try{
+                    System.exit(0);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
     }
     }
