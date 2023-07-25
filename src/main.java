@@ -21,7 +21,7 @@ public class main {
         System.out.println("_________Your library App_________");
 
         while(true){
-            System.out.println("\n******************************************************************************");
+            System.out.println(Color.WHITE_BOLD + "\n******************************************************************************");
             System.out.println("""
                     0. change the mode of the app for this session
                     1. see what's in the library
@@ -42,7 +42,7 @@ public class main {
                     16. a little toy with thread
                     17. exit the program""");
             System.out.println("******************************************************************************");
-            System.out.print("your command (number): ");
+            System.out.print(Color.GREEN_BOLD + "your command (number): " + Color.RESET);
             int command = scanner.nextInt();
 
             //change the mode of the app

@@ -266,10 +266,10 @@ public class Library implements Serializable {
 
     public void getAllInfoAboutTheParticularBook(int id) throws IOException {
         Book book = library.get(id);
-        System.out.println("\t\t\tid: " + id +
-                           "\n\t\t\ttitle: " + book.getTitle() +
-                           "\n\t\t\tauthor: " + book.getAuthor() +
-                           "\n\t\t\tgenre: " + book.getGenre());
+        System.out.println("\t\t\tid: "+id +
+                "\n\t\t\ttitle: "+  book.getTitle() +
+                "\n\t\t\tauthor: "+ book.getAuthor() +
+                "\n\t\t\tgenre: "+ book.getGenre());
 
         System.out.print("\t\t\treading now: ");
         boolean isItReading = false;
